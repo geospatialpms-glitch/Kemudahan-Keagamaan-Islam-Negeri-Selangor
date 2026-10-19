@@ -2,8 +2,55 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
 <style>
 :root{--red:#dc2834;--orange:#f6a21a;--navy:#18233f;--muted:#657087;--line:#e7dfd2;--soft:#fffaf3}*{box-sizing:border-box}body{margin:0;background:#fffdf9;color:var(--navy);font-family:Arial,'Segoe UI',sans-serif;font-size:12px}header{height:89px;display:flex;align-items:center;background:linear-gradient(100deg,#fff 68%,#fff1ca);border-bottom:1px solid #f0e2cb;padding:12px 20px;gap:14px}.brand{height:56px;width:62px;display:grid;place-items:center;border:1px solid #fee4c7;border-radius:9px;background:white;color:var(--red);font-weight:900;font-size:20px;line-height:1;text-align:center}.brand small{font-size:9px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:1px;color:#e45a25}.heading h1{font-size:21px;margin:5px 0 3px;line-height:1.14}.sub{font-size:11px;color:#6a6d79}.sky{margin-left:auto;font-size:43px;color:#d84c23;opacity:.65;white-space:nowrap}.layout{display:grid;grid-template-columns:158px minmax(0,1fr);min-height:calc(100vh - 89px)}aside{border-right:1px solid #eee2ce;background:#fffcf6;padding:10px 8px;display:flex;flex-direction:column;gap:6px}aside a{padding:13px 10px;border-radius:6px;display:flex;gap:11px;align-items:center;color:#283145;text-decoration:none;font-weight:600;cursor:pointer}aside a span{font-size:17px;color:#df2f39;width:18px;text-align:center}aside a.active{background:linear-gradient(90deg,#d72f37,#f4a11c);color:white}aside a.active span{color:white}.agency{margin-top:auto;text-align:center;background:#fff;border:1px solid #f1e1c7;border-radius:10px;padding:16px 5px;font-size:10px;line-height:1.5;font-weight:bold;box-shadow:0 2px 12px #eddcc533}.agency b{font-size:32px;display:block}main{min-width:0;padding:8px 10px 16px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.stat{height:61px;border:1px solid #e6d9c6;border-radius:9px;background:white;display:flex;align-items:center;gap:13px;padding:9px 14px}.symbol{font-size:27px;color:#ec5625}.stat-label{font-size:10px;font-weight:bold}.num{font-weight:900;font-size:24px;line-height:1.2}.num.red{color:#b61730}.unit{font-size:10px;color:#395282;font-weight:normal;margin-left:5px}.filters{margin:7px 0;display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto auto;gap:6px;align-items:end;border:1px solid #ede5dc;border-radius:8px;background:#fff;padding:6px}label{font-size:10px;font-weight:bold}select,input{width:100%;margin-top:3px;min-height:28px;border:1px solid #cfd8e7;background:#fff;border-radius:5px;color:#23324e;font-size:11px;padding:5px 9px}button{cursor:pointer;border:1px solid #9ca9c1;background:white;border-radius:5px;min-height:29px;padding:0 13px;font-weight:bold;color:#263854;white-space:nowrap}button.primary{background:linear-gradient(90deg,#f06518,#ffa61d);color:#fff;border-color:#f0982b}.content{display:grid;grid-template-columns:1.08fr 1fr;gap:7px}.panel{background:white;border:1px solid #e4ded6;border-radius:8px;overflow:hidden;min-width:0}.panel-title{font-size:11px;font-weight:bold;color:#df2936;padding:9px 10px;border-bottom:1px solid #f1e5dd}.panel-title:before{content:'▏';font-size:15px;color:#e22c30}.panel-title.hot{color:white;background:linear-gradient(90deg,#d82735,#f5a31a);border:0}.panel-title.hot:before{color:white}.map-panel{height:367px}.map-container{height:calc(100% - 33px);position:relative}#map{height:100%;width:100%;background:#adc8bd}.map-search{position:absolute;z-index:500;right:10px;top:9px;max-width:225px;width:45%;border-radius:5px;background:white}.map-search input{margin:0;height:30px}.legend{z-index:450;position:absolute;bottom:14px;left:9px;background:#192a48e9;border-radius:5px;color:#fff;padding:9px 13px;font-size:10px;line-height:1.7}.legend strong{display:block;margin-bottom:3px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;border:1px solid white}.charts{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:181px 179px;gap:7px;min-width:0}.chart-body{height:calc(100% - 33px);padding:6px 10px;display:flex;flex-direction:column;justify-content:center}.donut-wrap{display:flex;align-items:center;justify-content:center;gap:18px}.donut{height:120px;width:120px;flex:none;border-radius:50%;background:conic-gradient(#237ec7 0 69.94%,#df414c 69.94% 100%);display:flex;align-items:center;justify-content:center}.donut-hole{height:75px;width:75px;background:white;border-radius:100%;display:grid;place-content:center;text-align:center}.donut-hole b{font-size:21px}.donut-hole small{font-size:10px}.donut-leg{font-size:10px;line-height:2}.barrow{display:grid;grid-template-columns:94px 1fr 28px;gap:4px;align-items:center;margin:3px 0;font-size:10px}.barrow .name{text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.track{height:10px;background:#f0f2f4;border-radius:2px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#db3341,#f0ac3c);border-radius:2px}.value{font-weight:bold;color:#56617c}.two .barrow{margin:2px 0}.table-panel{margin-top:7px}.tablebar{display:flex;justify-content:space-between;align-items:center}.table-scroll{overflow:auto;max-height:280px}table{border-collapse:collapse;width:100%;font-size:10px;min-width:820px}th,td{padding:7px 8px;border:1px solid #e3e5e9;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#f4f4f4;color:#26324b;font-weight:bold}tr:nth-child(even){background:#fafbfc}.pill{background:#d8f3db;color:#23843c;border-radius:4px;padding:3px 6px}footer{text-align:right;font-size:9px;color:#81838c;padding:8px 5px}.map-note{font-size:10px;color:#657087;margin-bottom:4px}.empty{padding:25px;text-align:center;color:#8790a0}.leaflet-popup-content{max-width:280px;line-height:1.5}.leaflet-popup-content b{color:#ba2d37}.leaflet-control-layers{font-size:11px}@media(max-width:1150px){.content{grid-template-columns:1fr}.charts{grid-template-rows:185px 185px}.map-panel{height:410px}}@media(max-width:750px){header{height:auto;padding:9px}.heading h1{font-size:16px}.sky{display:none}.layout{grid-template-columns:1fr}aside{display:flex;flex-direction:row;overflow-x:auto}.agency{display:none}aside a{white-space:nowrap}.stats{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(2,1fr)}.charts{grid-template-columns:1fr;grid-template-rows:repeat(4,180px)}.map-panel{height:390px}}
+
+/* Header rasmi SUO: guna aset sebenar daripada Dashboard Tapak Perkuburan Negeri Selangor. */
+.suo-header{
+  position:relative;isolation:isolate;overflow:hidden;height:104px;min-height:104px;
+  display:flex;align-items:center;gap:14px;padding:12px 20px;
+  background:#fff;border-bottom:1px solid #e7dfd5;
+}
+.suo-brand-logo{
+  display:block;position:relative;z-index:2;flex:0 0 78px;width:78px;height:80px;
+  object-fit:contain;object-position:center;background:#fff;
+}
+.suo-header .suo-heading{position:relative;z-index:2;flex:1 1 auto;min-width:0}
+.suo-header .suo-heading .eyebrow{
+  color:#dd522a;font-size:10px;font-weight:800;letter-spacing:1.1px;line-height:1.35;
+}
+.suo-header .suo-heading h1{
+  color:#18233f;font-size:23px;line-height:1.17;margin:5px 0 4px;font-weight:800;
+}
+.suo-header .suo-heading .sub{color:#626879;font-size:11.5px;line-height:1.3}
+.suo-skyline{
+  position:absolute;right:0;top:0;bottom:0;width:min(840px,62vw);z-index:0;
+  background-image:url('./header-hd.webp');background-repeat:no-repeat;
+  background-size:auto 104px;background-position:right center;pointer-events:none;
+}
+.layout{min-height:calc(100vh - 104px)}
+@media(max-width:1100px){
+  .suo-header .suo-heading h1{font-size:19px}
+  .suo-skyline{opacity:.7}
+}
+@media(max-width:750px){
+  .suo-header{height:auto;min-height:89px;padding:9px 12px;gap:10px}
+  .suo-brand-logo{width:60px;height:67px;flex-basis:60px}
+  .suo-header .suo-heading h1{font-size:16px;line-height:1.2;margin:4px 0 3px}
+  .suo-header .suo-heading .eyebrow{font-size:8px;letter-spacing:.5px}
+  .suo-header .suo-heading .sub{font-size:10px}
+  .suo-skyline{display:none}
+  .layout{min-height:0}
+}
+
 </style></head><body>
-<header><div class="brand">🏙️<small>SUO</small></div><div class="heading"><div class="eyebrow">SELANGOR URBAN OBSERVATORY · URBAN SAFETY INTELLIGENCE</div><h1>Dashboard Kemudahan Keagamaan (Islam) Negeri Selangor</h1><div class="sub">Perancangan Kemudahan Keagamaan Untuk Kesejahteraan Masyarakat</div></div><div class="sky">☀︎ 🕌 ▥ ▥</div></header>
+<header class="suo-header" role="banner">
+  <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
+  <div class="heading suo-heading">
+    <div class="eyebrow">SELANGOR URBAN OBSERVATORY · URBAN SAFETY INTELLIGENCE</div>
+    <h1>Dashboard Kemudahan Keagamaan (Islam) Negeri Selangor</h1>
+    <div class="sub">Perancangan Kemudahan Keagamaan Untuk Kesejahteraan Masyarakat</div>
+  </div>
+  <div class="suo-skyline" aria-hidden="true"></div>
+</header>
 <div class="layout"><aside><a class="active" href="#home"><span>⌂</span>Utama</a><a href="#taburan"><span>♦</span>Taburan Kemudahan</a><a href="#jenis"><span>▦</span>Jenis Kemudahan</a><a href="#daerah"><span>◕</span>Analisis Daerah</a><a href="#senarai"><span>☷</span>Senarai Kemudahan</a><a href="#mengenai"><span>ⓘ</span>Mengenai</a><div class="agency"><b>🏵</b>JABATAN PERANCANGAN BANDAR DAN DESA<br>NEGERI SELANGOR<br>(PLANMalaysia Selangor)</div></aside>
 <main id="home"><section class="stats"><div class="stat"><span class="symbol">🕌</span><div><div class="stat-label">Jumlah Kemudahan</div><span class="num red" id="total">—</span><span class="unit">kemudahan</span></div></div><div class="stat"><span class="symbol">▧</span><div><div class="stat-label">Jumlah Keluasan</div><span class="num" id="area">—</span><span class="unit">hektar</span></div></div><div class="stat"><span class="symbol">♜</span><div><div class="stat-label">Masjid</div><span class="num red" id="masjid">—</span><span class="unit" id="masjidpct"></span></div></div><div class="stat"><span class="symbol">♟</span><div><div class="stat-label">Surau</div><span class="num red" id="surau">—</span><span class="unit" id="suraupct"></span></div></div></section>
 <div class="filters"><label>Daerah<select id="district"><option value="">Semua Daerah</option></select></label><label>Pihak Berkuasa Tempatan (PBT)<select id="pbt"><option value="">Semua PBT</option></select></label><label>Jenis Kemudahan<select id="type"><option value="">Semua Jenis</option></select></label><label>Carian Nama<input id="search" placeholder="Cari nama kemudahan..."/></label><button id="reset">↻ Reset</button><button class="primary" id="apply">⌕ Cari Kemudahan</button></div>
