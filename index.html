@@ -23,20 +23,19 @@
 .suo-header .suo-heading .sub{color:#626879;font-size:11.5px;line-height:1.3}
 .suo-skyline{
   position:absolute;
-  top:50%;
-  right:0;
-  bottom:auto;
-  width:min(600px,36vw);
-  height:96px;
+  inset:0 0 0 auto;
+  width:min(850px,48vw);
+  height:100%;
   z-index:0;
-  background-image:url('./header-skyline.png');
+  background-image:url('./header-hd.webp');
   background-repeat:no-repeat;
-  background-size:contain;
+  background-size:auto 104px;
   background-position:right center;
-  transform:translateY(-50%);
-  mix-blend-mode:multiply;
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 18%);
-  mask-image:linear-gradient(to right,transparent 0%,#000 18%);
+  transform:none;
+  mix-blend-mode:normal;
+  filter:saturate(1.5) contrast(1.1);
+  -webkit-mask-image:radial-gradient(ellipse 86% 83% at 76% 45%,#000 55%,transparent 100%);
+  mask-image:radial-gradient(ellipse 86% 83% at 76% 45%,#000 55%,transparent 100%);
   pointer-events:none;
 }
 .layout{min-height:calc(100vh - 104px)}
