@@ -1,6 +1,6 @@
 # Dashboard Kemudahan Keagamaan (Islam) Negeri Selangor
 
-Dashboard interaktif berdasarkan fail Shapefile yang diberikan. 1,587 tapak (477 Masjid dan 1,110 Surau), 9 daerah, 12 PBT, 592.59 hektar.
+Dashboard interaktif berdasarkan fail Shapefile Kemudahan Keagamaan (Islam) Negeri Selangor terkini yang diberikan. 1,587 tapak (476 Masjid dan 1,111 Surau), 9 daerah, 12 PBT, 592.59 hektar.
 
 ## GitHub Pages
 1. Cipta repositori baharu di GitHub.
@@ -11,7 +11,7 @@ Dashboard interaktif berdasarkan fail Shapefile yang diberikan. 1,587 tapak (477
 Peta satelit dan Leaflet memerlukan sambungan internet. Data tapak dimuatkan daripada `data.json`. Buka melalui GitHub Pages atau pelayan web tempatan (contohnya `python -m http.server 8000`), bukan dengan double-click fail HTML.
 
 ## Nota Data
-- Data asal mengandungi **hanya** dua kategori: Masjid dan Surau. Nama tempat yang ada perkataan "Surau" mungkin dalam sumber dikategorikan sebagai Masjid; dashboard sengaja mengekalkan kategori asal.
+- Data asal mengandungi **hanya** dua kategori: Masjid dan Surau. Kategori dikekalkan daripada data terkini yang diberikan. Rekod Surau Haji Abdullah Fakeh (Surau Kariah) telah dikategorikan sebagai Surau mengikut fail terbaru. Percanggahan nama/kategori lain memerlukan pengesahan sumber rasmi sebelum sebarang pembetulan.
 - Keluasan dijumlahkan daripada medan `Luas_Hek`.
 - Kedudukan penanda ialah titik wakil dalam poligon tapak. Klik penanda → "Lihat Sempadan Tapak" untuk melihat poligon sebenar.
 - Tiada data status operasi/agama tambahan; medan tersebut tidak direka.
