@@ -476,8 +476,7 @@ function setPrimaryView(view){
  $('tab-coverage').classList.toggle('active',coverage);
  $('tab-overview').setAttribute('aria-selected',String(!coverage));
  $('tab-coverage').setAttribute('aria-selected',String(coverage));
- if(coverage){$('coverage-total').textContent=fmt(all.length)}
- else setTimeout(()=>map?.invalidateSize(),70);
+ if(!coverage) setTimeout(()=>map?.invalidateSize(),70);
  window.scrollTo({top:0,behavior:'smooth'});
 }
 $('tab-overview').addEventListener('click',()=>setPrimaryView('overview'));
@@ -512,5 +511,5 @@ $('cov-district').onchange=()=>{coverageFill('cov-pbt',[...new Set(all.filter(x=
 $('cov-pbt').onchange=coverageOptions;$('cov-category').onchange=coverageOptions;
 $('cov-run').onclick=coverageRun;$('cov-clear').onclick=coverageReset;
 const originalPrimaryView=setPrimaryView;
-setPrimaryView=function(view){originalPrimaryView(view);if(view==='coverage'){coverageInit();coverageFill('cov-district',[...new Set(all.map(x=>x.d))].sort(),'Semua Daerah');coverageOptions();setTimeout(()=>coverageMap.invalidateSize(),100)}};
+setPrimaryView=function(view){originalPrimaryView(view);if(view==='coverage'){coverageInit();coverageFill('cov-district',[...new Set(all.map(x=>x.d))].sort(),'Semua Daerah');coverageOptions();requestAnimationFrame(()=>{coverageMap.invalidateSize(true);setTimeout(()=>coverageMap.invalidateSize(true),250)})}};
 </script></body></html>
