@@ -388,6 +388,32 @@ body.explore-mode #home-view{display:none!important}body.explore-mode #explore-w
 .analysis-pager{display:flex;align-items:center;gap:9px}.analysis-pager button{border:1px solid #e3c79f;background:#fff;color:#a84c2c;border-radius:7px;padding:7px 12px}.analysis-pager button:disabled{opacity:.4;cursor:not-allowed}.analysis-pager #analysis-next:not(:disabled){background:linear-gradient(95deg,#c83b34,#e99333);color:#fff;border-color:#d5814a}
 #analysis-page-indicator{font-variant-numeric:tabular-nums;min-width:55px;text-align:center;color:#24324d}.analysis-page-size{display:flex;align-items:center;gap:7px}.analysis-page-size select{width:auto;min-width:65px;margin:0;min-height:30px}
 @media(max-width:800px){.analysis-table-footer{justify-content:center;text-align:center}}
+
+/* Premium future-inspired SUO spatial analytics, preserving legibility */
+#ex-distribution .explore-insights{position:relative;padding:20px 18px 16px;background:linear-gradient(155deg,#fffdfb 0%,#fff8ed 55%,#fff 100%);border:1px solid #eacda5;box-shadow:0 9px 28px rgba(106,66,28,.09);isolation:isolate}
+#ex-distribution .explore-insights:before{content:"";position:absolute;right:-28px;top:-22px;width:135px;height:135px;border:1px solid rgba(219,165,82,.13);border-radius:50%;box-shadow:0 0 0 18px rgba(219,165,82,.035),0 0 0 38px rgba(219,165,82,.022);pointer-events:none;z-index:-1}
+#ex-distribution .insight-heading{display:flex;justify-content:space-between;align-items:center;margin:0 0 12px}
+#ex-distribution .insight-heading small{display:block;font-size:9px;letter-spacing:1.65px;color:#ad7951;font-weight:800;margin-bottom:5px}
+#ex-distribution .insight-heading h3{margin:0;color:#812d33;font-size:14px;font-weight:800;letter-spacing:-.1px}
+#ex-distribution .insight-mark{display:grid;place-items:center;color:#d8a05c;border:1px solid #f0d8b8;background:#fff8eb;width:32px;height:32px;border-radius:9px;font-size:19px}
+#ex-distribution .insight-legend{display:flex;justify-content:flex-end;gap:13px;margin:-3px 0 15px;color:#67718a;font-size:10px;font-weight:650}
+#ex-distribution .insight-legend span{display:flex;align-items:center;gap:5px}
+#ex-distribution .insight-legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
+#ex-distribution .legend-masjid{background:#c83a4a}#ex-distribution .legend-surau{background:#eb983d}
+#ex-distribution .ex-bar{grid-template-columns:minmax(86px,105px) minmax(0,1fr) 42px;gap:11px;margin:0;padding:9px 7px;border-radius:8px;font-size:10.5px;transition:background .2s,transform .2s}
+#ex-distribution .ex-bar:nth-child(odd){background:rgba(255,241,217,.32)}
+#ex-distribution .ex-bar:hover{background:#fff0d9;transform:translateX(2px)}
+#ex-distribution .ex-bar>span{font-weight:650;color:#35425c}
+#ex-distribution .ex-bar strong{font-size:11px;color:#29334e;font-variant-numeric:tabular-nums}
+#ex-distribution .ex-bar-track{height:16px;background:#eee9e4;box-shadow:inset 0 1px 3px rgba(43,49,57,.08);border-radius:5px;overflow:hidden;display:flex;position:relative}
+#ex-distribution .ex-bar-track i:first-child{background:linear-gradient(90deg,#bd3143,#e15b53)!important}
+#ex-distribution .ex-bar-track i:nth-child(2){background:linear-gradient(90deg,#e68736,#f6b44b)!important}
+#ex-distribution .ex-bar-track i{transition:width .25s ease}
+#ex-distribution .insight-divider{height:1px;background:linear-gradient(90deg,transparent,#e7caa3,transparent);margin:22px 0}
+#ex-distribution #ex-area-bars .ex-bar{padding:12px 7px}
+#ex-distribution #ex-area-bars .ex-bar-track{height:19px}
+#ex-distribution .insight-footnote{font-size:10px;line-height:1.5;margin:16px 5px 0;color:#8b7c72}
+@media(max-width:700px){#ex-distribution .explore-insights{padding:13px 9px}#ex-distribution .ex-bar{grid-template-columns:78px minmax(0,1fr) 42px;gap:6px}}
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
@@ -427,7 +453,7 @@ body.explore-mode #home-view{display:none!important}body.explore-mode #explore-w
 <div class="explore-head"><div><small>ANALISIS KEMUDAHAN KEAGAMAAN (ISLAM)</small><h2 id="explore-title">Analisis Taburan Kemudahan</h2><p id="explore-desc"></p></div><button id="explore-home" type="button">⌂ Kembali ke Utama</button></div>
 <div class="explore-controls"><label>Daerah<select id="ex-d"><option value="">Semua Daerah</option></select></label><label>PBT<select id="ex-p"><option value="">Semua PBT</option></select></label><label>Kategori<select id="ex-k"><option value="">Semua Kategori</option><option>Masjid</option><option>Surau</option></select></label><label>Carian Nama<input id="ex-q" placeholder="Cari nama kemudahan..." /></label><button type="button" id="ex-reset">Set Semula</button></div>
 <div class="explore-kpis"><div><small>Jumlah Kemudahan</small><strong id="ex-total">—</strong></div><div><small>Masjid</small><strong id="ex-m">—</strong></div><div><small>Surau</small><strong id="ex-s">—</strong></div><div><small>Keluasan (ha)</small><strong id="ex-ha">—</strong></div></div>
-<div id="ex-distribution"><div class="explore-split"><section class="explore-panel"><h3>Peta Taburan Kemudahan</h3><div id="ex-map"></div></section><section class="explore-panel"><h3>Komposisi Mengikut Daerah</h3><div id="ex-district-bars"></div><h3>Keluasan Mengikut Kategori</h3><div id="ex-area-bars"></div></section></div></div>
+<div id="ex-distribution"><div class="explore-split"><section class="explore-panel"><h3>Peta Taburan Kemudahan</h3><div id="ex-map"></div></section><section class="explore-panel explore-insights"><div class="insight-heading"><div><small>ANALITIK SPATIAL</small><h3>Komposisi Mengikut Daerah</h3></div><span class="insight-mark">✦</span></div><div class="insight-legend"><span><i class="legend-masjid"></i>Masjid</span><span><i class="legend-surau"></i>Surau</span></div><div id="ex-district-bars"></div><div class="insight-divider"></div><div class="insight-heading"><div><small>ANALISIS KELUASAN</small><h3>Keluasan Mengikut Kategori</h3></div><span class="insight-mark">✧</span></div><div id="ex-area-bars"></div><p class="insight-footnote">Pecahan bilangan dan keluasan dikemas kini berdasarkan pilihan penapis.</p></section></div></div>
 <div id="ex-list" hidden><section class="explore-panel"><div class="explore-list-header"><h3>Direktori dan Semakan Atribut</h3><span id="ex-list-count"></span></div><div class="ex-table-scroll"><table><thead><tr><th>Bil</th><th>Nama Kemudahan</th><th>Daerah</th><th>PBT</th><th>Kategori</th><th>Keluasan (ha)</th><th>Lokasi</th></tr></thead><tbody id="ex-rows"></tbody></table></div><div class="ex-pager"><span id="ex-page-info"></span><button type="button" id="ex-prev">‹ Sebelumnya</button><strong id="ex-pages"></strong><button type="button" id="ex-next">Seterusnya ›</button></div></section></div>
 </section><div id="home-view"><section id="analysis-workspace" class="analysis-workspace" hidden aria-label="Analisis mengikut kawasan">
 <div class="analysis-heading"><div><span class="analysis-eyebrow">ANALISIS SPATIAL KEMUDAHAN KEAGAMAAN (ISLAM)</span><h2 id="analysis-heading">Analisis Daerah</h2><p>Perbandingan kemudahan berdasarkan rekod GIS sebenar. Pilih kawasan untuk melihat butiran.</p></div><button type="button" id="analysis-home">⌂ Kembali ke Utama</button></div>
