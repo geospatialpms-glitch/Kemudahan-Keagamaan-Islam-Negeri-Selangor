@@ -552,7 +552,7 @@ function analysisRender(){
 }
 function analysisOpen(mode){
  analysisMode=mode;analysisSelection='';analysisPage=1;document.body.classList.add('analysis-mode');$('analysis-workspace').hidden=false;
- $('analysis-heading').textContent=mode==='district'?'Analisis Daerah':'Analisis PBT';
+ $('analysis-heading').textContent=mode==='district'?'Analisis Daerah':'Analisis Pihak Berkuasa Tempatan (PBT)';
  $('analysis-select-label').textContent=mode==='district'?'Pilih Daerah':'Pilih PBT';
  const field=groupField(),values=[...new Set(all.map(x=>x[field]))].sort((a,b)=>a.localeCompare(b,'ms'));
  $('analysis-select').innerHTML='<option value="">Semua '+(mode==='district'?'Daerah':'PBT')+'</option>'+values.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');
