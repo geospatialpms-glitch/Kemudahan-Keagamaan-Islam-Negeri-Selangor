@@ -703,10 +703,10 @@ function coverageRun(){
  coverageLastKey=null;coverageLayers.clearLayers();
  const palette={1:{color:'#28a65c',fill:'#70d48d'},3:{color:'#eda126',fill:'#f9cb65'},5:{color:'#e65b4b',fill:'#f39a88'}};
  // Draw largest first; smaller circles remain visible above.
- [...radii].reverse().forEach(radius=>{const c=palette[radius];L.circle([site.lat,site.lon],{radius:radius*1000,color:c.color,weight:2.5,fillColor:c.fill,fillOpacity:.14,interactive:false}).addTo(coverageLayers)});
+ let outerCircle=null;[...radii].reverse().forEach(radius=>{const c=palette[radius];const circle=L.circle([site.lat,site.lon],{radius:radius*1000,color:c.color,weight:2.5,fillColor:c.fill,fillOpacity:.14,interactive:false}).addTo(coverageLayers);if(radius===outer)outerCircle=circle});
  inside.forEach(x=>L.circleMarker([x.lat,x.lon],{radius:4,color:'#fff',weight:1,fillColor:x.k==='Masjid'?'#d94249':'#ed9338',fillOpacity:.95,renderer:coverageCanvas}).bindPopup(()=>esc(x.n)+' — '+esc(x.k)).addTo(coverageLayers));
  L.marker([site.lat,site.lon]).bindPopup('<b>'+esc(site.n)+'</b><br>Lokasi pusat liputan').addTo(coverageLayers);
- coverageMap.fitBounds(L.circle([site.lat,site.lon],{radius:outer*1000}).getBounds(),{padding:[30,30],maxZoom:14});
+ if(outerCircle)coverageMap.fitBounds(outerCircle.getBounds(),{padding:[30,30],maxZoom:14});
  $('cov-distance').textContent=radii.join(' / ')+' km';$('cov-area').textContent=(Math.PI*outer*outer).toFixed(2)+' km²';
  $('cov-masjid').textContent=fmt(inside.filter(x=>x.k==='Masjid').length);$('cov-surau').textContent=fmt(inside.filter(x=>x.k==='Surau').length);
  $('cov-selected').textContent='Pusat: '+site.n+' · '+site.d+' · '+shortPBT(site.p);
