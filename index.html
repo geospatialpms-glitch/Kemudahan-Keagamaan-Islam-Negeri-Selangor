@@ -521,6 +521,18 @@ button.primary{color:#fff!important}
 .explore-controls button,.analysis-toolbar button{color:#994b2c!important;border-color:#dfb985;font-weight:700}
 .explore-controls button:hover,.analysis-toolbar button:hover{background:#fff2de}
 @media(max-width:700px){.explore-head,.analysis-heading{padding:13px}.explore-head h2,.analysis-heading h2{font-size:18px!important}.explore-kpis strong,.analysis-kpis strong{font-size:20px!important}}
+
+/* Radius selection: semantic colours, compact sizing, clear selected state */
+.radius-choices{display:flex;gap:7px}
+.radius-choices label{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;min-width:0;min-height:33px;padding:7px 3px!important;border-width:1.5px!important;border-style:solid!important;border-radius:7px!important;font-size:11px;font-weight:700;cursor:pointer;transition:background .2s,box-shadow .2s}
+.radius-choices input{accent-color:currentColor;margin:0 2px 0 0}
+.radius-choices .radius-1{color:#18803a!important;border-color:#46b976!important;background:#f0fbf3!important}
+.radius-choices .radius-3{color:#a96600!important;border-color:#e8a129!important;background:#fff8e8!important}
+.radius-choices .radius-5{color:#c53c32!important;border-color:#ee6f60!important;background:#fff2ef!important}
+.radius-choices label:has(input:checked){box-shadow:0 0 0 2px currentColor inset;font-weight:800}
+.radius-choices .radius-1:has(input:checked){background:#dff6e6!important}
+.radius-choices .radius-3:has(input:checked){background:#ffefd0!important}
+.radius-choices .radius-5:has(input:checked){background:#ffe3df!important}
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
@@ -551,7 +563,7 @@ button.primary{color:#fff!important}
 <label>PBT<select id="cov-pbt"><option value="">Semua PBT</option></select></label>
 <label>Kategori<select id="cov-category"><option value="">Semua Kategori</option><option>Masjid</option><option>Surau</option></select></label>
 <label>Kemudahan Dipilih<select id="cov-site"><option value="">Pilih kemudahan</option></select></label>
-<fieldset><legend>Jarak Liputan (Radius)</legend><div class="radius-choices"><label><input type="radio" name="cov-radius" value="1">1 km</label><label><input type="radio" name="cov-radius" value="3" checked>3 km</label><label><input type="radio" name="cov-radius" value="5">5 km</label></div></fieldset>
+<fieldset><legend>Jarak Liputan (Radius)</legend><div class="radius-choices"><label class="radius-1"><input type="radio" name="cov-radius" value="1">1 km</label><label class="radius-3"><input type="radio" name="cov-radius" value="3" checked>3 km</label><label class="radius-5"><input type="radio" name="cov-radius" value="5">5 km</label></div></fieldset>
 <button type="button" id="cov-run" class="primary">▶ Jalankan Analisis Liputan</button><button type="button" id="cov-clear">↻ Set Semula</button><p id="cov-message" role="status">Pilih kemudahan, kemudian jalankan analisis.</p>
 <p class="coverage-disclaimer">Radius ialah jarak lurus (buffer geometri), bukan tempoh pemanduan, berjalan kaki atau ukuran kecukupan perkhidmatan.</p></aside>
 <div class="coverage-map-panel"><div class="coverage-panel-title">⌖ Peta Analisis Liputan</div><div id="coverage-map"></div><div class="coverage-map-legend"><span class="cov-red">●</span> Masjid　<span class="cov-orange">●</span> Surau　<span class="cov-ring">◯</span> Radius liputan</div></div>
