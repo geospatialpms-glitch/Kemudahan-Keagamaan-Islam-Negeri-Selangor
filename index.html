@@ -449,6 +449,38 @@ body.explore-mode #home-view{display:none!important}body.explore-mode #explore-w
 .leaflet-control-layers-list input{appearance:auto;width:13px;height:13px;margin:0 3px 0 0;vertical-align:middle;accent-color:#4B5563}
 .leaflet-control-layers-separator{margin:4px 0!important}
 .leaflet-control-layers-toggle{width:31px!important;height:31px!important;background-size:19px 19px!important}
+
+/* Harmonise formerly red/orange typography to black; retain chart bars, pins and icons */
+.panel-title:not(.hot),
+.panel-title:not(.hot) *,
+.num.red,
+.eyebrow,
+.suo-header .suo-heading .eyebrow,
+.explore-head small,
+.analysis-heading small,
+.insight-heading h3,
+.insight-heading small,
+.insight-footnote strong,
+.explore-list-header h3,
+.explore-list-header #ex-list-count,
+.analysis-card h3,
+.analysis-card h4,
+.analysis-workspace h3,
+.analysis-workspace h4,
+.explore-workspace h3,
+.explore-workspace h4,
+.category-masjid,
+.locate-btn,
+.leaflet-popup-content b,
+.side-navigation a:not(.active),
+.side-navigation a:not(.active) .nav-label {
+  color:#111827!important;
+}
+/* Keep white typography on gradient/bold navigation and map panel header */
+.panel-title.hot,.panel-title.hot *,button.primary,button.primary *,
+.side-navigation a.active,.side-navigation a.active *{color:#fff!important}
+/* Icons and their branded red/orange accent stay unchanged */
+.panel-title:not(.hot)::before{color:#d94a38!important}
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
