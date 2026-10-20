@@ -487,29 +487,28 @@ document.querySelectorAll('.side-navigation a').forEach(a=>a.addEventListener('c
 /* True straight-line radial analysis, derived from source representative coordinates. */
 let coverageMap=null,coverageLayers=null,coverageCircle=null,coverageChosen=null;
 const kmBetween=(a,b)=>{const rad=Math.PI/180,p1=a.lat*rad,p2=b.lat*rad,dp=(b.lat-a.lat)*rad,dl=(b.lon-a.lon)*rad;return 6371*2*Math.asin(Math.min(1,Math.sqrt(Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2)))};
-function coverageInit(){if(coverageMap)return;coverageMap=L.map('coverage-map',{preferCanvas:true}).setView([3.25,101.5],10);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(coverageMap);coverageLayers=L.layerGroup().addTo(coverageMap)}
+function coverageInit(){if(coverageMap)return;coverageMap=L.map('coverage-map',{preferCanvas:true,zoomControl:true}).setView([3.25,101.5],10);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(coverageMap);coverageLayers=L.layerGroup().addTo(coverageMap)}
 function coverageFill(id,values,placeholder){const el=$(id),previous=el.value;el.innerHTML='<option value="">'+placeholder+'</option>'+values.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');if(values.includes(previous))el.value=previous}
-function coverageOptions(){const district=$('cov-district').value,pbt=$('cov-pbt').value,category=$('cov-category').value;
- const subset=all.filter(x=>(!district||x.d===district)&&(!pbt||x.p===pbt));
- coverageFill('cov-pbt',[...new Set(all.filter(x=>!district||x.d===district).map(x=>x.p))].sort(),'Semua PBT');
- const usable=subset.filter(x=>!category||x.k===category).sort((a,b)=>a.n.localeCompare(b.n,'ms'));
- const el=$('cov-site'),prior=el.value;el.innerHTML='<option value="">Pilih kemudahan</option>'+usable.map(x=>'<option value="'+x.id+'">'+esc(x.n)+' ('+esc(shortPBT(x.p))+')</option>').join('');if(usable.some(x=>String(x.id)===prior))el.value=prior;
-}
-function coverageReset(){coverageChosen=null;$('cov-district').value='';$('cov-pbt').value='';$('cov-category').value='';document.querySelector('input[name="cov-radius"][value="3"]').checked=true;coverageOptions();['cov-distance','cov-area','cov-masjid','cov-surau'].forEach(id=>$(id).textContent='—');$('cov-rows').innerHTML='<tr><td colspan="3">Belum dianalisis</td></tr>';$('cov-selected').textContent='';$('cov-message').textContent='Pilih kemudahan, kemudian jalankan analisis.';if(coverageMap){coverageLayers.clearLayers();coverageMap.setView([3.25,101.5],10)}}
-function coverageRun(){const id=$('cov-site').value,site=all.find(x=>String(x.id)===id);if(!site){$('cov-message').textContent='Sila pilih satu kemudahan terlebih dahulu.';return}
+function coverageCandidates(){const d=$('cov-district').value,p=$('cov-pbt').value,k=$('cov-category').value;return all.filter(x=>(!d||x.d===d)&&(!p||x.p===p)&&(!k||x.k===k))}
+function coverageOptions(){const d=$('cov-district').value;coverageFill('cov-pbt',[...new Set(all.filter(x=>!d||x.d===d).map(x=>x.p))].sort(),'Semua PBT');const candidates=coverageCandidates().sort((a,b)=>a.n.localeCompare(b.n,'ms'));const el=$('cov-site'),prior=el.value;el.innerHTML='<option value="">Pilih kemudahan</option>'+candidates.map(x=>'<option value="'+x.id+'">'+esc(x.n)+' ('+esc(shortPBT(x.p))+')</option>').join('');if(candidates.some(x=>String(x.id)===prior))el.value=prior;coverageDrawDefault()}
+function coverageDrawDefault(){if(!coverageMap)return;coverageLayers.clearLayers();const candidates=coverageCandidates();const bounds=[];candidates.forEach(x=>{L.circleMarker([x.lat,x.lon],{radius:3.4,weight:.8,color:'#fff',fillColor:x.k==='Masjid'?'#d94249':'#ed9338',fillOpacity:.9,renderer:L.canvas()}).bindPopup('<b>'+esc(x.n)+'</b><br>'+esc(x.k)+' · '+esc(x.d)).addTo(coverageLayers);bounds.push([x.lat,x.lon])});if(bounds.length){if(candidates.length===all.length)coverageMap.setView([3.25,101.5],10);else coverageMap.fitBounds(bounds,{padding:[35,35],maxZoom:12})}else coverageMap.setView([3.25,101.5],10)}
+function coverageClearResults(){['cov-distance','cov-area','cov-masjid','cov-surau'].forEach(id=>$(id).textContent='—');$('cov-rows').innerHTML='<tr><td colspan="3">Pilih satu kemudahan untuk analisis</td></tr>';$('cov-selected').textContent=''}
+function coverageReset(){$('cov-district').value='';$('cov-pbt').value='';$('cov-category').value='';document.querySelector('input[name="cov-radius"][value="3"]').checked=true;coverageOptions();$('cov-site').value='';coverageClearResults();$('cov-message').textContent='Semua lokasi dipaparkan. Pilih kemudahan untuk mengira radius.'}
+function coverageRun(){const id=$('cov-site').value,site=all.find(x=>String(x.id)===id);if(!site){coverageClearResults();coverageDrawDefault();$('cov-message').textContent='Sila pilih satu kemudahan terlebih dahulu.';return}
  coverageInit();const radius=Number(document.querySelector('input[name="cov-radius"]:checked').value),inside=all.map(x=>({...x,km:kmBetween(site,x)})).filter(x=>x.km<=radius).sort((a,b)=>a.km-b.km);
- coverageLayers.clearLayers();L.circle([site.lat,site.lon],{radius:radius*1000,color:'#d88b25',weight:2,fillColor:'#f6b64b',fillOpacity:.18}).addTo(coverageLayers);
+ coverageLayers.clearLayers();const circle=L.circle([site.lat,site.lon],{radius:radius*1000,color:'#d88b25',weight:2,fillColor:'#f6b64b',fillOpacity:.18}).addTo(coverageLayers);
  inside.forEach(x=>L.circleMarker([x.lat,x.lon],{radius:4,color:'#fff',weight:1,fillColor:x.k==='Masjid'?'#d94249':'#ed9338',fillOpacity:.95}).bindPopup(esc(x.n)+' — '+esc(x.k)).addTo(coverageLayers));
  L.marker([site.lat,site.lon]).bindPopup('<b>'+esc(site.n)+'</b><br>Lokasi pusat liputan').addTo(coverageLayers);
- coverageMap.fitBounds(L.circle([site.lat,site.lon],{radius:radius*1000}).getBounds(),{padding:[25,25]});
+ coverageMap.fitBounds(circle.getBounds(),{padding:[30,30],maxZoom:14});
  $('cov-distance').textContent=radius+' km';$('cov-area').textContent=(Math.PI*radius*radius).toFixed(2)+' km²';$('cov-masjid').textContent=fmt(inside.filter(x=>x.k==='Masjid').length);$('cov-surau').textContent=fmt(inside.filter(x=>x.k==='Surau').length);
  $('cov-selected').textContent='Pusat: '+site.n+' · '+site.d+' · '+shortPBT(site.p);
  $('cov-rows').innerHTML=inside.slice(0,120).map(x=>'<tr><td>'+esc(x.n)+'</td><td>'+esc(x.k)+'</td><td>'+x.km.toFixed(2)+'</td></tr>').join('')||'<tr><td colspan="3">Tiada kemudahan dalam radius.</td></tr>';
  $('cov-message').textContent=fmt(inside.length)+' kemudahan dalam radius '+radius+' km'+(inside.length>120?' (120 rekod pertama dipaparkan)':'');
 }
-$('cov-district').onchange=()=>{coverageFill('cov-pbt',[...new Set(all.filter(x=>!$('cov-district').value||x.d===$('cov-district').value).map(x=>x.p))].sort(),'Semua PBT');coverageOptions()};
-$('cov-pbt').onchange=coverageOptions;$('cov-category').onchange=coverageOptions;
+$('cov-district').onchange=coverageOptions;$('cov-pbt').onchange=coverageOptions;$('cov-category').onchange=coverageOptions;
+$('cov-site').onchange=()=>{if($('cov-site').value)coverageRun();else{coverageClearResults();coverageDrawDefault()}};
+document.querySelectorAll('input[name="cov-radius"]').forEach(el=>el.addEventListener('change',()=>{if($('cov-site').value)coverageRun()}));
 $('cov-run').onclick=coverageRun;$('cov-clear').onclick=coverageReset;
 const originalPrimaryView=setPrimaryView;
-setPrimaryView=function(view){originalPrimaryView(view);if(view==='coverage'){coverageInit();coverageFill('cov-district',[...new Set(all.map(x=>x.d))].sort(),'Semua Daerah');coverageOptions();requestAnimationFrame(()=>{coverageMap.invalidateSize(true);setTimeout(()=>coverageMap.invalidateSize(true),250)})}};
+setPrimaryView=function(view){originalPrimaryView(view);if(view==='coverage'){coverageInit();coverageFill('cov-district',[...new Set(all.map(x=>x.d))].sort(),'Semua Daerah');coverageOptions();coverageDrawDefault();requestAnimationFrame(()=>{coverageMap.invalidateSize(true);setTimeout(()=>coverageMap.invalidateSize(true),250)})}};
 </script></body></html>
