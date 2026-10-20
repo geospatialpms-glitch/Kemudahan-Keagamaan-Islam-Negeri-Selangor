@@ -533,6 +533,14 @@ button.primary{color:#fff!important}
 .radius-choices .radius-1:has(input:checked){background:#dff6e6!important}
 .radius-choices .radius-3:has(input:checked){background:#ffefd0!important}
 .radius-choices .radius-5:has(input:checked){background:#ffe3df!important}
+
+/* Multi-selection radius chips and matching concentric map coverage */
+.radius-choices input[type="checkbox"]{width:13px;height:13px;accent-color:currentColor;cursor:pointer}
+.coverage-radius-legend{position:absolute;z-index:450;right:10px;bottom:37px;display:flex;gap:9px;background:#fffdf7ef;border:1px solid #e7d6bd;border-radius:7px;padding:6px 9px;font-size:10px;color:#26324b;box-shadow:0 2px 8px #18233f1a;pointer-events:none}
+.coverage-radius-legend span{display:flex;align-items:center;gap:4px}
+.coverage-radius-legend i{width:10px;height:10px;display:inline-block;border:2px solid;border-radius:50%}
+.coverage-radius-legend .ring1{border-color:#28a65c}.coverage-radius-legend .ring3{border-color:#eda126}.coverage-radius-legend .ring5{border-color:#e65b4b}
+@media(max-width:700px){.coverage-radius-legend{right:6px;bottom:33px;gap:5px;padding:5px;font-size:9px}}
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
@@ -563,10 +571,10 @@ button.primary{color:#fff!important}
 <label>PBT<select id="cov-pbt"><option value="">Semua PBT</option></select></label>
 <label>Kategori<select id="cov-category"><option value="">Semua Kategori</option><option>Masjid</option><option>Surau</option></select></label>
 <label>Kemudahan Dipilih<select id="cov-site"><option value="">Pilih kemudahan</option></select></label>
-<fieldset><legend>Jarak Liputan (Radius)</legend><div class="radius-choices"><label class="radius-1"><input type="radio" name="cov-radius" value="1">1 km</label><label class="radius-3"><input type="radio" name="cov-radius" value="3" checked>3 km</label><label class="radius-5"><input type="radio" name="cov-radius" value="5">5 km</label></div></fieldset>
+<fieldset><legend>Jarak Liputan (Radius)</legend><div class="radius-choices"><label class="radius-1"><input type="checkbox" name="cov-radius" value="1">1 km</label><label class="radius-3"><input type="checkbox" name="cov-radius" value="3" checked>3 km</label><label class="radius-5"><input type="checkbox" name="cov-radius" value="5">5 km</label></div></fieldset>
 <button type="button" id="cov-run" class="primary">▶ Jalankan Analisis Liputan</button><button type="button" id="cov-clear">↻ Set Semula</button><p id="cov-message" role="status">Pilih kemudahan, kemudian jalankan analisis.</p>
 <p class="coverage-disclaimer">Radius ialah jarak lurus (buffer geometri), bukan tempoh pemanduan, berjalan kaki atau ukuran kecukupan perkhidmatan.</p></aside>
-<div class="coverage-map-panel"><div class="coverage-panel-title">⌖ Peta Analisis Liputan</div><div id="coverage-map"></div><div class="coverage-map-legend"><span class="cov-red">●</span> Masjid　<span class="cov-orange">●</span> Surau　<span class="cov-ring">◯</span> Radius liputan</div></div>
+<div class="coverage-map-panel"><div class="coverage-panel-title">⌖ Peta Analisis Liputan</div><div id="coverage-map"></div><div class="coverage-radius-legend" aria-label="Warna radius liputan"><span><i class="ring1"></i>1 km</span><span><i class="ring3"></i>3 km</span><span><i class="ring5"></i>5 km</span></div><div class="coverage-map-legend"><span class="cov-red">●</span> Masjid　<span class="cov-orange">●</span> Surau　<span class="cov-ring">◯</span> Radius liputan</div></div>
 <div class="coverage-results"><h3>Ringkasan Analisis Liputan</h3><div class="coverage-result-cards"><div><small>Jarak Radius</small><strong id="cov-distance">—</strong></div><div><small>Keluasan Lingkaran Teori</small><strong id="cov-area">—</strong></div><div><small>Masjid Dalam Radius</small><strong id="cov-masjid">—</strong></div><div><small>Surau Dalam Radius</small><strong id="cov-surau">—</strong></div></div><div id="cov-selected" class="coverage-selected"></div><h3>Senarai Kemudahan Dalam Radius</h3><div class="coverage-list-scroll"><table><thead><tr><th>Nama Kemudahan</th><th>Kategori</th><th>Jarak (km)</th></tr></thead><tbody id="cov-rows"><tr><td colspan="3">Belum dianalisis</td></tr></tbody></table></div><p class="coverage-disclaimer">Keluasan lingkaran ialah πr² dan tidak ditolak kawasan luar negeri atau laut. Bilangan dikira berdasarkan titik wakil rekod GIS.</p></div></div></section><section id="explore-workspace" class="explore-workspace" hidden>
 <div class="explore-head"><div><small>ANALISIS KEMUDAHAN KEAGAMAAN (ISLAM)</small><h2 id="explore-title">Analisis Taburan Kemudahan</h2><p id="explore-desc"></p></div></div>
 <div class="explore-controls"><label>Daerah<select id="ex-d"><option value="">Semua Daerah</option></select></label><label>PBT<select id="ex-p"><option value="">Semua PBT</option></select></label><label>Kategori<select id="ex-k"><option value="">Semua Kategori</option><option>Masjid</option><option>Surau</option></select></label><label>Carian Nama<input id="ex-q" placeholder="Cari nama kemudahan..." /></label><button type="button" id="ex-reset">Set Semula</button></div>
@@ -685,17 +693,25 @@ function coverageCandidates(){const d=$('cov-district').value,p=$('cov-pbt').val
 function coverageOptions(){const d=$('cov-district').value;coverageFill('cov-pbt',[...new Set(all.filter(x=>!d||x.d===d).map(x=>x.p))].sort(),'Semua PBT');const candidates=coverageCandidates().sort((a,b)=>a.n.localeCompare(b.n,'ms'));const el=$('cov-site'),prior=el.value;el.innerHTML='<option value="">Pilih kemudahan</option>'+candidates.map(x=>'<option value="'+x.id+'">'+esc(x.n)+' ('+esc(shortPBT(x.p))+')</option>').join('');if(candidates.some(x=>String(x.id)===prior))el.value=prior;coverageDrawDefault()}
 function coverageDrawDefault(force=false){if(!coverageMap)return;const candidates=coverageCandidates(),key=[$('cov-district').value,$('cov-pbt').value,$('cov-category').value].join('|');if(!force&&key===coverageLastKey)return;coverageLastKey=key;coverageLayers.clearLayers();const bounds=[];candidates.forEach(x=>{L.circleMarker([x.lat,x.lon],{radius:3.4,weight:.8,color:'#fff',fillColor:x.k==='Masjid'?'#d94249':'#ed9338',fillOpacity:.9,renderer:coverageCanvas}).bindPopup(()=>'<b>'+esc(x.n)+'</b><br>'+esc(x.k)+' · '+esc(x.d)).addTo(coverageLayers);bounds.push([x.lat,x.lon])});if(bounds.length){if(candidates.length===all.length)coverageMap.setView([3.25,101.5],10,{animate:false});else coverageMap.fitBounds(bounds,{padding:[35,35],maxZoom:12,animate:false})}else coverageMap.setView([3.25,101.5],10,{animate:false})}
 function coverageClearResults(){['cov-distance','cov-area','cov-masjid','cov-surau'].forEach(id=>$(id).textContent='—');$('cov-rows').innerHTML='<tr><td colspan="3">Pilih satu kemudahan untuk analisis</td></tr>';$('cov-selected').textContent=''}
-function coverageReset(){coverageLastKey=null;$('cov-district').value='';$('cov-pbt').value='';$('cov-category').value='';document.querySelector('input[name="cov-radius"][value="3"]').checked=true;coverageOptions();$('cov-site').value='';coverageClearResults();$('cov-message').textContent='Semua lokasi dipaparkan. Pilih kemudahan untuk mengira radius.'}
-function coverageRun(){const id=$('cov-site').value,site=all.find(x=>String(x.id)===id);if(!site){coverageClearResults();coverageDrawDefault();$('cov-message').textContent='Sila pilih satu kemudahan terlebih dahulu.';return}
- coverageInit();const radius=Number(document.querySelector('input[name="cov-radius"]:checked').value),inside=all.map(x=>({...x,km:kmBetween(site,x)})).filter(x=>x.km<=radius).sort((a,b)=>a.km-b.km);
- coverageLastKey=null;coverageLayers.clearLayers();const circle=L.circle([site.lat,site.lon],{radius:radius*1000,color:'#d88b25',weight:2,fillColor:'#f6b64b',fillOpacity:.18}).addTo(coverageLayers);
+function coverageReset(){coverageLastKey=null;$('cov-district').value='';$('cov-pbt').value='';$('cov-category').value='';document.querySelectorAll('input[name="cov-radius"]').forEach(el=>el.checked=el.value==='3');coverageOptions();$('cov-site').value='';coverageClearResults();$('cov-message').textContent='Semua lokasi dipaparkan. Pilih kemudahan untuk mengira radius.'}
+function coverageRun(){
+ const id=$('cov-site').value,site=all.find(x=>String(x.id)===id);
+ if(!site){coverageClearResults();coverageDrawDefault();$('cov-message').textContent='Sila pilih satu kemudahan terlebih dahulu.';return}
+ const radii=[...document.querySelectorAll('input[name="cov-radius"]:checked')].map(el=>Number(el.value)).sort((a,b)=>a-b);
+ if(!radii.length){coverageClearResults();coverageLayers?.clearLayers();$('cov-message').textContent='Pilih sekurang-kurangnya satu radius: 1 km, 3 km atau 5 km.';return}
+ coverageInit();const outer=radii[radii.length-1],inside=all.map(x=>({...x,km:kmBetween(site,x)})).filter(x=>x.km<=outer).sort((a,b)=>a.km-b.km);
+ coverageLastKey=null;coverageLayers.clearLayers();
+ const palette={1:{color:'#28a65c',fill:'#70d48d'},3:{color:'#eda126',fill:'#f9cb65'},5:{color:'#e65b4b',fill:'#f39a88'}};
+ // Draw largest first; smaller circles remain visible above.
+ [...radii].reverse().forEach(radius=>{const c=palette[radius];L.circle([site.lat,site.lon],{radius:radius*1000,color:c.color,weight:2.5,fillColor:c.fill,fillOpacity:.14,interactive:false}).addTo(coverageLayers)});
  inside.forEach(x=>L.circleMarker([x.lat,x.lon],{radius:4,color:'#fff',weight:1,fillColor:x.k==='Masjid'?'#d94249':'#ed9338',fillOpacity:.95,renderer:coverageCanvas}).bindPopup(()=>esc(x.n)+' — '+esc(x.k)).addTo(coverageLayers));
  L.marker([site.lat,site.lon]).bindPopup('<b>'+esc(site.n)+'</b><br>Lokasi pusat liputan').addTo(coverageLayers);
- coverageMap.fitBounds(circle.getBounds(),{padding:[30,30],maxZoom:14});
- $('cov-distance').textContent=radius+' km';$('cov-area').textContent=(Math.PI*radius*radius).toFixed(2)+' km²';$('cov-masjid').textContent=fmt(inside.filter(x=>x.k==='Masjid').length);$('cov-surau').textContent=fmt(inside.filter(x=>x.k==='Surau').length);
+ coverageMap.fitBounds(L.circle([site.lat,site.lon],{radius:outer*1000}).getBounds(),{padding:[30,30],maxZoom:14});
+ $('cov-distance').textContent=radii.join(' / ')+' km';$('cov-area').textContent=(Math.PI*outer*outer).toFixed(2)+' km²';
+ $('cov-masjid').textContent=fmt(inside.filter(x=>x.k==='Masjid').length);$('cov-surau').textContent=fmt(inside.filter(x=>x.k==='Surau').length);
  $('cov-selected').textContent='Pusat: '+site.n+' · '+site.d+' · '+shortPBT(site.p);
  $('cov-rows').innerHTML=inside.slice(0,120).map(x=>'<tr><td>'+esc(x.n)+'</td><td>'+esc(x.k)+'</td><td>'+x.km.toFixed(2)+'</td></tr>').join('')||'<tr><td colspan="3">Tiada kemudahan dalam radius.</td></tr>';
- $('cov-message').textContent=fmt(inside.length)+' kemudahan dalam radius '+radius+' km'+(inside.length>120?' (120 rekod pertama dipaparkan)':'');
+ $('cov-message').textContent=fmt(inside.length)+' kemudahan dalam radius maksimum '+outer+' km · Lingkaran dipilih: '+radii.join(', ')+' km'+(inside.length>120?' (120 rekod pertama dipaparkan)':'');
 }
 $('cov-district').onchange=coverageOptions;$('cov-pbt').onchange=coverageOptions;$('cov-category').onchange=coverageOptions;
 $('cov-site').onchange=()=>{if($('cov-site').value)coverageRun();else{coverageClearResults();coverageDrawDefault()}};
