@@ -295,6 +295,33 @@ body.analysis-mode main>.stats,body.analysis-mode main>.horizontal-filters,body.
 @media(max-width:1000px){.analysis-panels{grid-template-columns:1fr}.analysis-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.analysis-heading{align-items:flex-start;flex-direction:column}.analysis-toolbar{flex-wrap:wrap}.analysis-kpis{gap:6px}.analysis-kpis>div{padding:10px}.analysis-kpis strong{font-size:20px}}
 
+
+/* Two primary view tabs; existing SUO header is untouched */
+.view-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0 0 13px;background:#fff;border:1px solid #e6d8c8;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px #51371d0a}
+.view-tabs button{height:45px;display:flex;align-items:center;justify-content:center;gap:10px;color:#344363;border:none;border-radius:0;background:#fff;font-size:12px;font-weight:800;cursor:pointer}
+.view-tabs button+button{border-left:1px solid #e6d8c8}
+.view-tabs button.active{background:#fff4e8;color:#d84b29;box-shadow:inset 0 -3px #e76b2b}
+.view-tabs button:focus-visible{outline:2px solid #df6c2d;outline-offset:-3px}
+.coverage-view[hidden],#home-view[hidden]{display:none!important}
+.coverage-view{padding-bottom:20px}
+.coverage-intro{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 22px;background:linear-gradient(110deg,#fff5e5,#fffdf8);border:1px solid #eed6b5;border-radius:11px}
+.coverage-kicker{font-size:10px;color:#d75d2d;letter-spacing:1px;font-weight:800}
+.coverage-intro h2{font-size:20px;margin:6px 0;color:#1c2a47}
+.coverage-intro p{font-size:12px;color:#6d7180;margin:0;line-height:1.6}
+.coverage-state{white-space:nowrap;background:#fff;border:1px solid #e6c49b;color:#8b5b2d;border-radius:30px;padding:8px 11px;font-size:11px;font-weight:700}
+.coverage-preview{display:grid;grid-template-columns:290px 1fr;gap:12px;margin-top:12px;min-height:480px}
+.coverage-preview-side{padding:20px;border:1px solid #ead8c0;background:#fff;border-radius:11px}
+.coverage-preview-side h3{color:#c4472d;margin:0 0 12px;font-size:15px}.coverage-preview-side p{color:#647087;line-height:1.6;font-size:12px}
+.coverage-facts{display:grid;gap:10px;margin:18px 0}.coverage-facts div{padding:11px;border:1px solid #efe1cd;border-radius:8px;background:#fffaf2}
+.coverage-facts small{display:block;color:#697386;font-size:10px}.coverage-facts strong{display:block;margin-top:5px;font-size:19px;color:#b9353a}
+.coverage-preview-side .coverage-disclaimer{font-size:10px;color:#8e653b}
+.coverage-preview-map{border:1px solid #e4d5c3;border-radius:11px;display:grid;place-items:center;background:linear-gradient(140deg,#e3eeec,#f8f6ed);text-align:center;padding:20px}
+.coverage-preview-map>div{max-width:370px}.coverage-preview-map span{display:block;font-size:55px;color:#d06d3e}.coverage-preview-map strong{font-size:16px;color:#34435b}.coverage-preview-map p{font-size:12px;line-height:1.6;color:#67758a}
+body.coverage-mode #home-view,body.coverage-mode #analysis-workspace{display:none!important}
+body.analysis-mode.coverage-mode #coverage-view{display:block}
+body.analysis-mode:not(.coverage-mode) .view-tabs{display:none}
+@media(max-width:760px){.coverage-preview{grid-template-columns:1fr}.coverage-preview-map{min-height:280px}.coverage-intro{flex-direction:column;align-items:flex-start}.view-tabs button{height:40px;font-size:11px}}
+
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
@@ -318,7 +345,11 @@ body.analysis-mode main>.stats,body.analysis-mode main>.horizontal-filters,body.
 <div class="sidebar-motif" aria-hidden="true">۞</div>
 <div class="agency"><b>✧</b>PLANMalaysia Selangor</div>
 </aside>
-<main id="home"><section id="analysis-workspace" class="analysis-workspace" hidden aria-label="Analisis mengikut kawasan">
+<main id="home"><div class="view-tabs" role="tablist" aria-label="Paparan Dashboard"><button type="button" role="tab" id="tab-overview" aria-selected="true" aria-controls="home-view" class="active"><span aria-hidden="true">▥</span> Overview</button><button type="button" role="tab" id="tab-coverage" aria-selected="false" aria-controls="coverage-view"><span aria-hidden="true">⌖</span> Coverage Analysis</button></div>
+<section id="coverage-view" class="coverage-view" role="tabpanel" aria-labelledby="tab-coverage" hidden>
+<div class="coverage-intro"><div><div class="coverage-kicker">ANALISIS LIPUTAN SPATIAL</div><h2>Coverage Analysis Kemudahan Keagamaan (Islam)</h2><p>Ruang analisis liputan Masjid dan Surau mengikut lokasi, Daerah dan PBT. Mod pengiraan kawasan liputan belum diaktifkan.</p></div><span class="coverage-state">Dalam pembangunan</span></div>
+<div class="coverage-preview"><div class="coverage-preview-side"><h3>Panel Analisis Liputan</h3><p>Modul ini akan menyediakan pilihan kemudahan, radius liputan dan paparan keputusan selepas kaedah analisis ditetapkan.</p><div class="coverage-facts"><div><small>Jumlah Rekod GIS</small><strong id="coverage-total">—</strong></div><div><small>Kategori</small><strong>Masjid / Surau</strong></div></div><p class="coverage-disclaimer">Liputan sebenar memerlukan kaedah buffer jarak atau servis rangkaian jalan. Tiada zon liputan yang direka atau dianggap telah dikira.</p></div><div class="coverage-preview-map"><div><span aria-hidden="true">⌖</span><strong>Paparan Peta Coverage Analysis</strong><p>Peta dan zon liputan interaktif akan dipaparkan di sini apabila modul analisis dibangunkan.</p></div></div></div>
+</section><div id="home-view"><section id="analysis-workspace" class="analysis-workspace" hidden aria-label="Analisis mengikut kawasan">
 <div class="analysis-heading"><div><span class="analysis-eyebrow">ANALISIS SPATIAL KEMUDAHAN KEAGAMAAN (ISLAM)</span><h2 id="analysis-heading">Analisis Daerah</h2><p>Perbandingan kemudahan berdasarkan rekod GIS sebenar. Pilih kawasan untuk melihat butiran.</p></div><button type="button" id="analysis-home">⌂ Kembali ke Utama</button></div>
 <div class="analysis-toolbar"><label id="analysis-select-label" for="analysis-select">Pilih Daerah</label><select id="analysis-select"></select><button type="button" id="analysis-reset">Semua Kawasan</button></div>
 <div class="analysis-kpis"><div><small>Jumlah Kemudahan</small><strong id="ak-total">—</strong></div><div><small>Masjid</small><strong id="ak-masjid">—</strong></div><div><small>Surau</small><strong id="ak-surau">—</strong></div><div><small>Keluasan (ha)</small><strong id="ak-area">—</strong></div></div>
@@ -334,7 +365,7 @@ body.analysis-mode main>.stats,body.analysis-mode main>.horizontal-filters,body.
 </div>
 
 <section class="content"><article id="taburan" class="panel map-panel"><div class="panel-title hot">♧ Taburan Kemudahan Keagamaan (Islam) Negeri Selangor</div><div class="map-container"><div id="map"></div><div class="map-search"><input id="mapsearch" placeholder="Cari nama, lokasi atau daerah..."/></div><div class="legend"><strong>Petunjuk</strong><div><i class="dot" style="background:#df3d48"></i>Masjid</div><div><i class="dot" style="background:#f4b436"></i>Surau</div><div>□ Keluasan Tapak Kemudahan</div></div></div></article><div class="charts"><article id="jenis" class="panel"><div class="panel-title">Kategori Kemudahan</div><div class="chart-body"><div class="donut-wrap"><div class="donut" id="donut"><div class="donut-hole"><b id="donuttotal">—</b><small>kemudahan</small></div></div><div class="donut-leg"><div><i class="dot" style="background:#d93c49"></i>Masjid: <b id="legendmasjid">—</b></div><div><i class="dot" style="background:#ed8b37"></i>Surau: <b id="legendsurau">—</b></div></div></div></div></article><article class="panel"><div class="panel-title">Keluasan Mengikut Jenis (ha)</div><div class="chart-body" id="typebars"></div></article><article id="daerah" class="panel two"><div class="panel-title">Taburan Kemudahan Mengikut Daerah (9 Daerah)</div><div class="chart-body" id="districtbars"></div></article><article id="pbt-panel" class="panel two"><div class="panel-title">Taburan Kemudahan Mengikut PBT (12 PBT)</div><div class="chart-body" id="pbtbars"></div></article></div></section>
-<section class="panel table-panel" id="senarai"><div class="tablebar"><div class="panel-title">Senarai Kemudahan Keagamaan (Islam) <span id="tablecount" class="table-count" aria-live="polite"></span></div></div><div class="table-scroll"><table><thead><tr><th>Bil</th><th>Nama Kemudahan</th><th>Daerah</th><th>PBT</th><th>Kategori</th><th>Keluasan (ha)</th><th>Lokasi</th></tr></thead><tbody id="rows"></tbody></table></div></section><footer id="mengenai">Sumber: Data Shapefile Kemudahan Keagamaan (Islam) Negeri Selangor · 1,587 rekod asal · Data disediakan pengguna · Peta asas © Esri / OpenStreetMap</footer></main></div>
+<section class="panel table-panel" id="senarai"><div class="tablebar"><div class="panel-title">Senarai Kemudahan Keagamaan (Islam) <span id="tablecount" class="table-count" aria-live="polite"></span></div></div><div class="table-scroll"><table><thead><tr><th>Bil</th><th>Nama Kemudahan</th><th>Daerah</th><th>PBT</th><th>Kategori</th><th>Keluasan (ha)</th><th>Lokasi</th></tr></thead><tbody id="rows"></tbody></table></div></section><footer id="mengenai">Sumber: Data Shapefile Kemudahan Keagamaan (Islam) Negeri Selangor · 1,587 rekod asal · Data disediakan pengguna · Peta asas © Esri / OpenStreetMap</footer></div></main></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 let all=[],filtered=[],map,markers,outline,points=[],baseSatellite,baseOSM;const $=id=>document.getElementById(id),fmt=n=>Number(n).toLocaleString('en-US'),areaFmt=n=>Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -396,5 +427,25 @@ $('analysis-comparison').addEventListener('click',e=>{const row=e.target.closest
 $('analysis-comparison').addEventListener('keydown',e=>{if(e.key==='Enter'){e.target.closest('[data-area]')?.click()}});
 $('analysis-rows').addEventListener('click',e=>{const b=e.target.closest('[data-site]');if(!b)return;const x=all[Number(b.dataset.site)];if(!x)return;analysisClose();['district','pbt','type','search'].forEach(id=>$(id).value='');refresh();focusSite(x.id)});
 document.querySelectorAll('.side-navigation a').forEach(a=>a.addEventListener('click',e=>{const dest=a.getAttribute('href');if(dest==='#daerah'||dest==='#pbt-panel'){e.preventDefault();analysisOpen(dest==='#daerah'?'district':'pbt')}else{analysisClose();document.querySelectorAll('.side-navigation a').forEach(x=>x.classList.toggle('active',x===a))}}));
+
+
+function setPrimaryView(view){
+ const coverage=view==='coverage';
+ if(!coverage&&document.body.classList.contains('analysis-mode'))analysisClose();
+ if(coverage){document.body.classList.remove('analysis-mode');$('analysis-workspace').hidden=true;}
+ document.body.classList.toggle('coverage-mode',coverage);
+ $('home-view').hidden=coverage;
+ $('coverage-view').hidden=!coverage;
+ $('tab-overview').classList.toggle('active',!coverage);
+ $('tab-coverage').classList.toggle('active',coverage);
+ $('tab-overview').setAttribute('aria-selected',String(!coverage));
+ $('tab-coverage').setAttribute('aria-selected',String(coverage));
+ if(coverage){$('coverage-total').textContent=fmt(all.length)}
+ else setTimeout(()=>map?.invalidateSize(),70);
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+$('tab-overview').addEventListener('click',()=>setPrimaryView('overview'));
+$('tab-coverage').addEventListener('click',()=>setPrimaryView('coverage'));
+document.querySelectorAll('.side-navigation a').forEach(a=>a.addEventListener('click',()=>{if(document.body.classList.contains('coverage-mode'))setPrimaryView('overview')},true));
 
 </script></body></html>
