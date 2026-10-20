@@ -377,6 +377,11 @@ body.analysis-mode:not(.coverage-mode) #home-view{display:block!important}
 .ex-pager{display:flex;gap:10px;justify-content:center;align-items:center;padding:12px;background:#fffaf2;font-size:11px}.ex-pager span{margin-right:auto}
 body.explore-mode #home-view{display:none!important}body.explore-mode #explore-workspace{display:block}
 @media(max-width:1050px){.explore-split{grid-template-columns:1fr}.explore-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.explore-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Keep SUO header visible while scrolling; overlay dashboard content safely */
+.suo-header{position:sticky;top:0;z-index:1100;isolation:isolate;box-shadow:0 2px 9px rgba(37,40,53,.09)}
+#home,#taburan,#jenis,#daerah,#pbt-panel,#senarai,#mengenai,.analysis-workspace,.explore-workspace{scroll-margin-top:132px}
+@media(max-width:750px){.suo-header{position:sticky;top:0;z-index:1100}#home,#taburan,#jenis,#daerah,#pbt-panel,#senarai,#mengenai{scroll-margin-top:105px}}
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
