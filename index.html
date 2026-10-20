@@ -258,6 +258,43 @@ main{padding:12px;min-width:0;background:#fffcf7}
 @media(max-width:1200px){.horizontal-filters{grid-template-columns:repeat(4,minmax(0,1fr))}.horizontal-filters button{width:100%}}
 @media(max-width:820px){.layout{display:block}.navigation-sidebar{padding:7px 10px}.side-navigation{flex-direction:row;overflow-x:auto;gap:5px}.side-navigation a{white-space:nowrap;flex:0 0 auto;padding:9px}.navigation-sidebar .sidebar-motif,.navigation-sidebar .agency{display:none}.horizontal-filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
+
+/* Dedicated district and local-authority interactive analysis */
+body.analysis-mode main>.stats,body.analysis-mode main>.horizontal-filters,body.analysis-mode main>.content,body.analysis-mode main>.table-panel,body.analysis-mode main>footer{display:none}
+.analysis-workspace[hidden]{display:none!important}.analysis-workspace{padding:5px 0 20px}
+.analysis-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-radius:12px;background:linear-gradient(100deg,#fff8eb,#fff);border:1px solid #e9d3b0}
+.analysis-eyebrow{font-size:10px;letter-spacing:1.1px;font-weight:800;color:#c85530}
+.analysis-heading h2{font-size:22px;color:#182743;margin:5px 0}.analysis-heading p{color:#6a7081;margin:0;font-size:12px}
+.analysis-heading button,.analysis-toolbar button{border:1px solid #dfb881;background:#fff;color:#a44a30;border-radius:7px;padding:9px 13px}
+.analysis-toolbar{display:flex;align-items:center;gap:12px;margin:12px 0;padding:12px 15px;border:1px solid #eedec7;border-radius:10px;background:#fff}
+.analysis-toolbar label{font-size:12px}.analysis-toolbar select{max-width:340px;margin:0;flex:1;height:36px}
+.analysis-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.analysis-kpis>div{border:1px solid #ead5b9;border-radius:10px;background:#fff;padding:16px;position:relative;overflow:hidden}
+.analysis-kpis>div:after{content:"✧";position:absolute;right:9px;top:-10px;font-size:60px;color:#dfc299;opacity:.22}
+.analysis-kpis small{display:block;font-size:11px;color:#59647a}.analysis-kpis strong{display:block;margin-top:6px;font-size:26px;color:#bd303e}
+.analysis-panels{display:grid;grid-template-columns:1.2fr 1fr;gap:11px;margin-top:12px}
+.analysis-card{padding:14px;border:1px solid #eddac1;border-radius:10px;background:#fff;box-shadow:0 2px 9px #4c37170c}
+.analysis-card h3{font-size:13px;margin:0 0 15px;color:#c43e30}
+.analysis-bars{max-height:390px;overflow:auto}.analysis-line{display:grid;grid-template-columns:110px minmax(0,1fr) 38px;align-items:center;gap:10px;padding:6px 4px;cursor:pointer;border-radius:5px;font-size:11px}
+.analysis-line:hover,.analysis-line.selected{background:#fff3e0}
+.analysis-line .analysis-track{height:15px;background:#f4f0ec;border-radius:4px;overflow:hidden;display:flex}
+.analysis-line .analysis-track i{height:100%;display:block;background:#d94249}
+.analysis-line .analysis-track i+ i{background:#ed9338}
+.analysis-line b{text-align:right;font-variant-numeric:tabular-nums}
+.analysis-composition{display:flex;align-items:center;justify-content:center;gap:22px;margin:10px 0 25px}
+.analysis-donut{width:155px;height:155px;border-radius:50%;display:grid;place-items:center}
+.analysis-donut>div{width:100px;height:100px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.analysis-donut strong{font-size:23px;color:#16243c}.analysis-donut small{font-size:10px}
+#analysis-legend{font-size:12px;line-height:2}
+.analysis-area-line{display:grid;grid-template-columns:60px 1fr 72px;gap:9px;align-items:center;font-size:11px;margin:8px 0}
+.analysis-area-line .track{height:13px;background:#f5f0ec}.analysis-area-line .track i{display:block;height:100%}
+.analysis-list{margin-top:12px}.analysis-list-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.analysis-list-head span{font-size:11px;color:#7c624e}
+.analysis-table-scroll{max-height:330px;overflow:auto}.analysis-table-scroll table{min-width:800px}.analysis-table-scroll td{white-space:normal}
+.analysis-map-btn{color:#b44c2c;border:1px solid #e7cc9e;background:#fff9ef;border-radius:6px;padding:4px 10px}
+.analysis-note{font-size:10px;color:#697487;margin:12px 0 0}
+@media(max-width:1000px){.analysis-panels{grid-template-columns:1fr}.analysis-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.analysis-heading{align-items:flex-start;flex-direction:column}.analysis-toolbar{flex-wrap:wrap}.analysis-kpis{gap:6px}.analysis-kpis>div{padding:10px}.analysis-kpis strong{font-size:20px}}
+
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
@@ -281,7 +318,12 @@ main{padding:12px;min-width:0;background:#fffcf7}
 <div class="sidebar-motif" aria-hidden="true">۞</div>
 <div class="agency"><b>✧</b>PLANMalaysia Selangor</div>
 </aside>
-<main id="home"><section class="stats"><div class="stat stat-facility"><span class="stat-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M11 48h42v8H11zM16 29h32v19H16zM23 25c0-8 4-13 9-16 5 3 9 8 9 16v4H23zM30 6h4v5h-4zM8 20h7v28H8zm41 0h7v28h-7zM8 17l3.5-7L15 17zm41 0 3.5-7L56 17z"/><path fill="#fff8ee" d="M28 37a4 4 0 0 1 8 0v11h-8zM19 34h5v7h-5zm21 0h5v7h-5z"/></svg></span><div class="stat-content"><div class="stat-label">Jumlah Kemudahan</div><div class="stat-figure"><span class="num red" id="total">—</span><span class="unit">kemudahan</span></div></div></div><div class="stat stat-land"><span class="stat-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="m7 44 17-9 17 6 16-9v19l-16 8-17-6-17 7z" fill="currentColor" opacity=".75"/><path d="m7 44 17-9 17 6 16-9M24 35v18m17-12v18" fill="none" stroke="#fff" stroke-width="2"/><path d="M32 5c-10 0-17 7-17 17 0 12 17 29 17 29s17-17 17-29C49 12 42 5 32 5zm0 23a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" fill="currentColor"/></svg></span><div class="stat-content"><div class="stat-label">Jumlah Keluasan</div><div class="stat-figure"><span class="num " id="area">—</span><span class="unit">hektar</span></div></div></div><div class="stat stat-masjid"><span class="stat-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M12 48h40v9H12zM17 32h30v16H17zM22 28c0-9 5-15 10-18 5 3 10 9 10 18v4H22zM30 6h4v5h-4zM7 25h8v32H7zm42 0h8v32h-8zM6 23l5-9 5 9zm42 0 5-9 5 9z"/><path d="M28 48v-9a4 4 0 0 1 8 0v9zM20 36h5v7h-5zm19 0h5v7h-5z" fill="#fff8ef"/></svg></span><div class="stat-content"><div class="stat-label">Masjid</div><div class="stat-figure"><span class="num red" id="masjid">—</span><span class="unit" id="masjidpct"></span></div></div></div><div class="stat stat-surau"><span class="stat-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M11 48h42v9H11zM15 34h34v14H15zM20 30c0-8 6-13 12-16 6 3 12 8 12 16v4H20zM30 10h4v6h-4z"/><path fill="#fff8ef" d="M26 48v-9a6 6 0 0 1 12 0v9zM18 38h5v7h-5zm23 0h5v7h-5z"/></svg></span><div class="stat-content"><div class="stat-label">Surau</div><div class="stat-figure"><span class="num red" id="surau">—</span><span class="unit" id="suraupct"></span></div></div></div></section>
+<main id="home"><section id="analysis-workspace" class="analysis-workspace" hidden aria-label="Analisis mengikut kawasan">
+<div class="analysis-heading"><div><span class="analysis-eyebrow">ANALISIS SPATIAL KEMUDAHAN KEAGAMAAN (ISLAM)</span><h2 id="analysis-heading">Analisis Daerah</h2><p>Perbandingan kemudahan berdasarkan rekod GIS sebenar. Pilih kawasan untuk melihat butiran.</p></div><button type="button" id="analysis-home">⌂ Kembali ke Utama</button></div>
+<div class="analysis-toolbar"><label id="analysis-select-label" for="analysis-select">Pilih Daerah</label><select id="analysis-select"></select><button type="button" id="analysis-reset">Semua Kawasan</button></div>
+<div class="analysis-kpis"><div><small>Jumlah Kemudahan</small><strong id="ak-total">—</strong></div><div><small>Masjid</small><strong id="ak-masjid">—</strong></div><div><small>Surau</small><strong id="ak-surau">—</strong></div><div><small>Keluasan (ha)</small><strong id="ak-area">—</strong></div></div>
+<div class="analysis-panels"><article class="analysis-card"><h3 id="analysis-chart-title">Perbandingan Mengikut Daerah</h3><div id="analysis-comparison" class="analysis-bars"></div></article><article class="analysis-card"><h3>Komposisi Kategori</h3><div class="analysis-composition"><div id="analysis-donut" class="analysis-donut"><div><strong id="analysis-donut-total">—</strong><small>Kemudahan</small></div></div><div id="analysis-legend"></div></div><h3>Keluasan Mengikut Kategori (ha)</h3><div id="analysis-areas"></div></article></div>
+<article class="analysis-card analysis-list"><div class="analysis-list-head"><h3 id="analysis-list-title">Senarai Kemudahan Mengikut Kawasan</h3><span id="analysis-listed"></span></div><div class="analysis-table-scroll"><table><thead><tr><th>Bil</th><th>Nama Kemudahan</th><th>Daerah</th><th>PBT</th><th>Kategori</th><th>Keluasan (ha)</th><th>Lokasi</th></tr></thead><tbody id="analysis-rows"></tbody></table></div><p class="analysis-note">Bilangan dan keluasan ialah analisis rekod tapak; bukan penilaian kecukupan kemudahan berdasarkan penduduk.</p></article></section><section class="stats"><div class="stat stat-facility"><span class="stat-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M11 48h42v8H11zM16 29h32v19H16zM23 25c0-8 4-13 9-16 5 3 9 8 9 16v4H23zM30 6h4v5h-4zM8 20h7v28H8zm41 0h7v28h-7zM8 17l3.5-7L15 17zm41 0 3.5-7L56 17z"/><path fill="#fff8ee" d="M28 37a4 4 0 0 1 8 0v11h-8zM19 34h5v7h-5zm21 0h5v7h-5z"/></svg></span><div class="stat-content"><div class="stat-label">Jumlah Kemudahan</div><div class="stat-figure"><span class="num red" id="total">—</span><span class="unit">kemudahan</span></div></div></div><div class="stat stat-land"><span class="stat-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="m7 44 17-9 17 6 16-9v19l-16 8-17-6-17 7z" fill="currentColor" opacity=".75"/><path d="m7 44 17-9 17 6 16-9M24 35v18m17-12v18" fill="none" stroke="#fff" stroke-width="2"/><path d="M32 5c-10 0-17 7-17 17 0 12 17 29 17 29s17-17 17-29C49 12 42 5 32 5zm0 23a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" fill="currentColor"/></svg></span><div class="stat-content"><div class="stat-label">Jumlah Keluasan</div><div class="stat-figure"><span class="num " id="area">—</span><span class="unit">hektar</span></div></div></div><div class="stat stat-masjid"><span class="stat-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M12 48h40v9H12zM17 32h30v16H17zM22 28c0-9 5-15 10-18 5 3 10 9 10 18v4H22zM30 6h4v5h-4zM7 25h8v32H7zm42 0h8v32h-8zM6 23l5-9 5 9zm42 0 5-9 5 9z"/><path d="M28 48v-9a4 4 0 0 1 8 0v9zM20 36h5v7h-5zm19 0h5v7h-5z" fill="#fff8ef"/></svg></span><div class="stat-content"><div class="stat-label">Masjid</div><div class="stat-figure"><span class="num red" id="masjid">—</span><span class="unit" id="masjidpct"></span></div></div></div><div class="stat stat-surau"><span class="stat-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path fill="currentColor" d="M11 48h42v9H11zM15 34h34v14H15zM20 30c0-8 6-13 12-16 6 3 12 8 12 16v4H20zM30 10h4v6h-4z"/><path fill="#fff8ef" d="M26 48v-9a6 6 0 0 1 12 0v9zM18 38h5v7h-5zm23 0h5v7h-5z"/></svg></span><div class="stat-content"><div class="stat-label">Surau</div><div class="stat-figure"><span class="num red" id="surau">—</span><span class="unit" id="suraupct"></span></div></div></div></section>
 <div class="filters horizontal-filters" role="search" aria-label="Penapis data kemudahan">
 <label>Daerah<select id="district"><option value="">Semua Daerah</option></select></label>
 <label>Pihak Berkuasa Tempatan (PBT)<select id="pbt"><option value="">Semua PBT</option></select></label>
@@ -310,4 +352,49 @@ function reset(){['district','pbt','type','search','mapsearch'].forEach(x=>$(x).
 function csv(){const q=v=>'"'+String(v).replace(/"/g,'""')+'"';let data=[['Nama','Kategori','Daerah','PBT','Luas_Hek','Latitude','Longitude'],...filtered.map(f=>[f.n,f.k,f.d,f.p,f.a,f.lat,f.lon])];const blob=new Blob(['\ufeff'+data.map(row=>row.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Kemudahan_Keagamaan_Islam_Selangor.csv';a.click();URL.revokeObjectURL(a.href)}
 fetch('data.json').then(r=>{if(!r.ok)throw Error('data.json tidak dijumpai');return r.json()}).then(data=>{all=data;initMap();fillSelect('district',[...new Set(data.map(f=>f.d))]);fillSelect('pbt',[...new Set(data.map(f=>f.p))]);fillSelect('type',[...new Set(data.map(f=>f.k))]);refresh()}).catch(err=>{document.querySelector('main').insertAdjacentHTML('afterbegin',`<p style="background:#ffe0e0;padding:14px">Gagal membaca data: ${esc(err.message)}. Sila buka melalui pelayan web (GitHub Pages atau localhost), bukan terus sebagai file://.</p>`)});
 $('apply').onclick=refresh;$('reset').onclick=reset;$('search').addEventListener('keydown',e=>{if(e.key==='Enter')refresh()});$('mapsearch').addEventListener('keydown',e=>{if(e.key==='Enter'){$('search').value=$('mapsearch').value;refresh()}});document.querySelectorAll('aside a').forEach(a=>a.onclick=()=>{document.querySelectorAll('aside a').forEach(e=>e.classList.remove('active'));a.classList.add('active');setTimeout(()=>map?.invalidateSize(),150)});
+
+/* Module analysis: reuses the exact loaded GIS records; no duplicate data */
+let analysisMode='district',analysisSelection='';
+const groupField=()=>analysisMode==='district'?'d':'p';
+const aggregateAnalysis=records=>{let m=records.filter(x=>x.k==='Masjid').length;return {total:records.length,masjid:m,surau:records.length-m,ha:records.reduce((sum,x)=>sum+Number(x.a||0),0)}};
+const analysisRowsData=()=>all.filter(x=>!analysisSelection||x[groupField()]===analysisSelection);
+function analysisRender(){
+ const field=groupField(), data=analysisRowsData(),t=aggregateAnalysis(data);
+ $('ak-total').textContent=fmt(t.total);$('ak-masjid').textContent=fmt(t.masjid);$('ak-surau').textContent=fmt(t.surau);$('ak-area').textContent=areaFmt(t.ha);
+ $('analysis-donut-total').textContent=fmt(t.total);
+ $('analysis-donut').style.background=t.total?'conic-gradient(#d94249 0 '+100*t.masjid/t.total+'%,#ed9338 '+100*t.masjid/t.total+'% 100%)':'#eee';
+ $('analysis-legend').innerHTML='<div style="color:#ba3540">● Masjid: '+fmt(t.masjid)+' ('+(t.total?(100*t.masjid/t.total).toFixed(1):0)+'%)</div><div style="color:#c87724">● Surau: '+fmt(t.surau)+' ('+(t.total?(100*t.surau/t.total).toFixed(1):0)+'%)</div>';
+ const areaM=data.filter(x=>x.k==='Masjid').reduce((sum,x)=>sum+x.a,0),areaS=t.ha-areaM,areaMax=Math.max(areaM,areaS,0.001);
+ $('analysis-areas').innerHTML=[['Masjid',areaM,'#d94249'],['Surau',areaS,'#ed9338']].map(([name,n,col])=>'<div class="analysis-area-line"><span>'+name+'</span><div class="track"><i style="width:'+(n/areaMax*100)+'%;background:'+col+'"></i></div><b>'+areaFmt(n)+'</b></div>').join('');
+ const map=new Map();all.forEach(x=>{const k=x[field];if(!map.has(k))map.set(k,{total:0,masjid:0,surau:0});const o=map.get(k);o.total++;o[x.k==='Masjid'?'masjid':'surau']++});
+ const pairs=[...map.entries()].sort((a,b)=>b[1].total-a[1].total),max=Math.max(1,...pairs.map(x=>x[1].total));
+ $('analysis-comparison').innerHTML=pairs.map(([name,v])=>'<div class="analysis-line '+(name===analysisSelection?'selected':'')+'" role="button" tabindex="0" data-area="'+esc(name)+'" title="'+esc(name)+'"><span>'+esc(field==='p'?shortPBT(name):name)+'</span><div class="analysis-track"><i style="width:'+(100*v.masjid/max)+'%"></i><i style="width:'+(100*v.surau/max)+'%"></i></div><b>'+fmt(v.total)+'</b></div>').join('');
+ $('analysis-chart-title').textContent='Taburan '+(analysisMode==='district'?'9 Daerah':'12 PBT')+' — Masjid dan Surau';
+ $('analysis-list-title').textContent=analysisSelection?'Senarai Kemudahan: '+analysisSelection:'Senarai Kemudahan Semua '+(analysisMode==='district'?'Daerah':'PBT');
+ $('analysis-listed').textContent=fmt(data.length)+' rekod';
+ $('analysis-rows').innerHTML=data.slice(0,150).map((x,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(x.n)+'</td><td>'+esc(x.d)+'</td><td title="'+esc(x.p)+'">'+esc(shortPBT(x.p))+'</td><td>'+esc(x.k)+'</td><td>'+areaFmt(x.a)+'</td><td><button class="analysis-map-btn" data-site="'+x.id+'">⌖ Peta</button></td></tr>').join('')||'<tr><td colspan="7">Tiada rekod</td></tr>';
+ if(data.length>150)$('analysis-listed').textContent+=' · memaparkan 150 rekod pertama';
+}
+function analysisOpen(mode){
+ analysisMode=mode;analysisSelection='';document.body.classList.add('analysis-mode');$('analysis-workspace').hidden=false;
+ $('analysis-heading').textContent=mode==='district'?'Analisis Daerah':'Analisis PBT';
+ $('analysis-select-label').textContent=mode==='district'?'Pilih Daerah':'Pilih PBT';
+ const field=groupField(),values=[...new Set(all.map(x=>x[field]))].sort((a,b)=>a.localeCompare(b,'ms'));
+ $('analysis-select').innerHTML='<option value="">Semua '+(mode==='district'?'Daerah':'PBT')+'</option>'+values.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');
+ document.querySelectorAll('.side-navigation a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')===(mode==='district'?'#daerah':'#pbt-panel')));
+ analysisRender();window.scrollTo({top:0,behavior:'smooth'});
+}
+function analysisClose(){
+ document.body.classList.remove('analysis-mode');$('analysis-workspace').hidden=true;
+ document.querySelectorAll('.side-navigation a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#home'));
+ setTimeout(()=>map?.invalidateSize(),60);
+}
+$('analysis-home').onclick=()=>{analysisClose();location.hash='home'};
+$('analysis-select').onchange=()=>{analysisSelection=$('analysis-select').value;analysisRender()};
+$('analysis-reset').onclick=()=>{analysisSelection='';$('analysis-select').value='';analysisRender()};
+$('analysis-comparison').addEventListener('click',e=>{const row=e.target.closest('[data-area]');if(!row)return;analysisSelection=analysisSelection===row.dataset.area?'':row.dataset.area;$('analysis-select').value=analysisSelection;analysisRender()});
+$('analysis-comparison').addEventListener('keydown',e=>{if(e.key==='Enter'){e.target.closest('[data-area]')?.click()}});
+$('analysis-rows').addEventListener('click',e=>{const b=e.target.closest('[data-site]');if(!b)return;const x=all[Number(b.dataset.site)];if(!x)return;analysisClose();['district','pbt','type','search'].forEach(id=>$(id).value='');refresh();focusSite(x.id)});
+document.querySelectorAll('.side-navigation a').forEach(a=>a.addEventListener('click',e=>{const dest=a.getAttribute('href');if(dest==='#daerah'||dest==='#pbt-panel'){e.preventDefault();analysisOpen(dest==='#daerah'?'district':'pbt')}else{analysisClose();document.querySelectorAll('.side-navigation a').forEach(x=>x.classList.toggle('active',x===a))}}));
+
 </script></body></html>
