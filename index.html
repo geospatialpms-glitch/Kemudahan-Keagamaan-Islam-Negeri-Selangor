@@ -541,6 +541,14 @@ button.primary{color:#fff!important}
 .coverage-radius-legend i{width:10px;height:10px;display:inline-block;border:2px solid;border-radius:50%}
 .coverage-radius-legend .ring1{border-color:#28a65c}.coverage-radius-legend .ring3{border-color:#eda126}.coverage-radius-legend .ring5{border-color:#e65b4b}
 @media(max-width:700px){.coverage-radius-legend{right:6px;bottom:33px;gap:5px;padding:5px;font-size:9px}}
+
+/* Gold mosque-arch ornament on the lower left navigation sidebar */
+@media(min-width:821px){
+.navigation-sidebar{min-height:calc(100vh - 94px);display:flex;flex-direction:column}
+.navigation-sidebar .sidebar-motif{display:block!important;flex:0 0 auto;width:100%;height:145px;min-height:0;margin:auto 0 8px!important;background:url('./sidebar-islamic-arch.svg') center bottom / contain no-repeat;opacity:.68!important;font-size:0;line-height:0;pointer-events:none}
+.navigation-sidebar .agency{display:block!important;position:relative;flex:0 0 auto;margin:0!important}
+}
+@media(max-width:820px){.navigation-sidebar .sidebar-motif,.navigation-sidebar .agency{display:none!important}}
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
@@ -560,7 +568,7 @@ button.primary{color:#fff!important}
 <a href="#pbt-panel"><span><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V7l8-4 8 4v14M8 9h2m4 0h2M8 13h2m4 0h2M8 21v-4h8v4"/></svg></span>Analisis PBT</a>
 <a href="#senarai"><span><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h1M3 12h1M3 18h1"/></svg></span>Senarai Kemudahan</a>
 </nav>
-<div class="sidebar-motif" aria-hidden="true">۞</div>
+<div class="sidebar-motif" aria-hidden="true"></div>
 <div class="agency"><b>✧</b>PLANMalaysia Selangor</div>
 </aside>
 <main id="home"><div class="view-tabs" role="tablist" aria-label="Paparan Dashboard"><button type="button" role="tab" id="tab-overview" aria-selected="true" aria-controls="home-view" class="active"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9h4v11m4 0V4h4v16m4 0v-8h3v8"/></svg> Paparan Keseluruhan</button><button type="button" role="tab" id="tab-coverage" aria-selected="false" aria-controls="coverage-view"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg> Analisis Liputan</button></div>
