@@ -431,6 +431,11 @@ body.explore-mode #home-view{display:none!important}body.explore-mode #explore-w
 #ex-list .explore-list-header::after{content:"";position:absolute;right:12px;top:50%;transform:translateY(-50%);width:59px;height:59px;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23dcae63%22%20stroke-width%3D%221.05%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M60%205C72%2020%2075%2034%2060%2051C45%2034%2048%2020%2060%205Z%20M60%20115C48%20100%2045%2086%2060%2069C75%2086%2072%20100%2060%20115Z%20M5%2060C20%2048%2034%2045%2051%2060C34%2075%2020%2072%205%2060Z%20M115%2060C100%2072%2086%2075%2069%2060C86%2045%20100%2048%20115%2060Z%22%2F%3E%3Cpath%20d%3D%22M21%2021C42%2020%2053%2031%2055%2053C33%2051%2022%2040%2021%2021Z%20M99%2021C98%2040%2087%2051%2065%2053C67%2031%2078%2020%2099%2021Z%20M21%2099C22%2080%2033%2069%2055%2067C53%2089%2042%20100%2021%2099Z%20M99%2099C78%20100%2067%2089%2065%2067C87%2069%2098%2080%2099%2099Z%22%2F%3E%3Cpath%20d%3D%22M60%2018L74%2042L102%2046L78%2060L102%2074L74%2078L60%20102L46%2078L18%2074L42%2060L18%2046L46%2042Z%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2213%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2224%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-size:contain;background-repeat:no-repeat;opacity:.43;pointer-events:none}
 #ex-list .explore-list-header>*,.analysis-workspace .analysis-kpis>div>*{position:relative;z-index:1}
 @media(max-width:700px){.analysis-workspace .analysis-kpis>div{padding-right:49px}.analysis-workspace .analysis-kpis>div::after{width:42px;height:42px;right:4px}}
+
+/* Selangor administrative boundaries: neutral tones and restrained labels */
+.adm-label-icon{background:none!important;border:0!important;box-shadow:none!important;pointer-events:none!important}
+.adm-label-icon span{display:block;position:relative;left:50%;transform:translateX(-50%);width:max-content;max-width:125px;white-space:normal;text-align:center;font:600 10px/1.15 Arial,sans-serif;color:#4B5563;text-shadow:0 1px 2px #fff,0 -1px 2px #fff,1px 0 2px #fff,-1px 0 2px #fff;opacity:.92}
+.adm-label-pbt span{font-size:9px;color:#6B7280;max-width:105px;font-weight:500}
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
@@ -493,7 +498,7 @@ body.explore-mode #home-view{display:none!important}body.explore-mode #explore-w
 <script>
 let all=[],filtered=[],map,markers,outline,points=[],baseSatellite,baseOSM,sharedCanvas,currentPage=1,pageSize=100;const $=id=>document.getElementById(id),fmt=n=>Number(n).toLocaleString('en-US'),areaFmt=n=>Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function initMap(){map=L.map('map',{preferCanvas:true,zoomControl:true}).setView([3.27,101.52],9);sharedCanvas=L.canvas({padding:0.25});baseSatellite=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18});baseOSM=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'});baseSatellite.addTo(map);L.control.layers({'Satelit':baseSatellite,'Peta Jalan':baseOSM}).addTo(map);markers=L.layerGroup().addTo(map);outline=L.geoJSON(null,{style:{color:'#ffce26',weight:3,fillColor:'#ffed86',fillOpacity:.14}}).addTo(map)}
+function initMap(){map=L.map('map',{preferCanvas:true,zoomControl:true}).setView([3.27,101.52],9);sharedCanvas=L.canvas({padding:0.25});baseSatellite=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18});baseOSM=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'});baseSatellite.addTo(map);L.control.layers({'Satelit':baseSatellite,'Peta Jalan':baseOSM}).addTo(map);markers=L.layerGroup().addTo(map);outline=L.geoJSON(null,{style:{color:'#ffce26',weight:3,fillColor:'#ffed86',fillOpacity:.14}}).addTo(map);attachAdminBoundaries(map)}
 function fillSelect(id,vals){vals.sort((a,b)=>a.localeCompare(b,'ms')).forEach(x=>{let o=document.createElement('option');o.value=x;o.textContent=x;$(id).append(o)})}
 function pop(f){return `<b>${esc(f.n)}</b><hr style="border:0;border-top:1px solid #ddd"><b>Kategori:</b> ${esc(f.k)}<br><b>Daerah:</b> ${esc(f.d)}<br><b>PBT:</b> ${esc(f.p)}<br><b>Keluasan:</b> ${areaFmt(f.a)} ha<br><b>Koordinat:</b> ${f.lat.toFixed(6)}, ${f.lon.toFixed(6)}<br><button onclick="showPolygon(${f.id})" style="margin-top:7px">Lihat Sempadan Tapak</button>`}
 function showPolygon(id){let f=all[id];outline.clearLayers();outline.addData({type:'Feature',geometry:f.geo,properties:{}});map.fitBounds(outline.getBounds(),{padding:[35,35],maxZoom:17});}
@@ -578,7 +583,7 @@ document.querySelectorAll('.side-navigation a').forEach(a=>a.addEventListener('c
 /* True straight-line radial analysis, derived from source representative coordinates. */
 let coverageMap=null,coverageLayers=null,coverageCircle=null,coverageChosen=null,coverageCanvas=null,coverageLastKey=null;
 const kmBetween=(a,b)=>{const rad=Math.PI/180,p1=a.lat*rad,p2=b.lat*rad,dp=(b.lat-a.lat)*rad,dl=(b.lon-a.lon)*rad;return 6371*2*Math.asin(Math.min(1,Math.sqrt(Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2)))};
-function coverageInit(){if(coverageMap)return;coverageMap=L.map('coverage-map',{preferCanvas:true,zoomControl:true}).setView([3.25,101.5],10);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(coverageMap);coverageCanvas=L.canvas({padding:.25});coverageLayers=L.layerGroup().addTo(coverageMap)}
+function coverageInit(){if(coverageMap)return;coverageMap=L.map('coverage-map',{preferCanvas:true,zoomControl:true}).setView([3.25,101.5],10);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(coverageMap);coverageCanvas=L.canvas({padding:.25});coverageLayers=L.layerGroup().addTo(coverageMap);attachAdminBoundaries(coverageMap)}
 function coverageFill(id,values,placeholder){const el=$(id),previous=el.value;el.innerHTML='<option value="">'+placeholder+'</option>'+values.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');if(values.includes(previous))el.value=previous}
 function coverageCandidates(){const d=$('cov-district').value,p=$('cov-pbt').value,k=$('cov-category').value;return all.filter(x=>(!d||x.d===d)&&(!p||x.p===p)&&(!k||x.k===k))}
 function coverageOptions(){const d=$('cov-district').value;coverageFill('cov-pbt',[...new Set(all.filter(x=>!d||x.d===d).map(x=>x.p))].sort(),'Semua PBT');const candidates=coverageCandidates().sort((a,b)=>a.n.localeCompare(b.n,'ms'));const el=$('cov-site'),prior=el.value;el.innerHTML='<option value="">Pilih kemudahan</option>'+candidates.map(x=>'<option value="'+x.id+'">'+esc(x.n)+' ('+esc(shortPBT(x.p))+')</option>').join('');if(candidates.some(x=>String(x.id)===prior))el.value=prior;coverageDrawDefault()}
@@ -605,7 +610,7 @@ setPrimaryView=function(view){originalPrimaryView(view);if(view==='coverage'){co
 
 /* Dedicated sidebar workspaces for spatial distribution and the record directory */
 let exploreMode='distribution',exploreFiltered=[],explorePage=1,exploreMap=null,exploreMarkers=null,exploreCanvas=null;
-function exploreInitMap(){if(exploreMap)return;exploreMap=L.map('ex-map',{preferCanvas:true}).setView([3.25,101.5],10);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(exploreMap);exploreCanvas=L.canvas({padding:.25});exploreMarkers=L.layerGroup().addTo(exploreMap)}
+function exploreInitMap(){if(exploreMap)return;exploreMap=L.map('ex-map',{preferCanvas:true}).setView([3.25,101.5],10);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(exploreMap);exploreCanvas=L.canvas({padding:.25});exploreMarkers=L.layerGroup().addTo(exploreMap);attachAdminBoundaries(exploreMap)}
 function exploreFill(id,values,label){const sel=$(id),old=sel.value;sel.innerHTML='<option value="">'+label+'</option>'+values.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');if(values.includes(old))sel.value=old}
 function exploreUpdate(){const d=$('ex-d').value,p=$('ex-p').value,k=$('ex-k').value,q=$('ex-q').value.toLowerCase().trim();
  exploreFill('ex-p',[...new Set(all.filter(x=>!d||x.d===d).map(x=>x.p))].sort(),'Semua PBT');
@@ -633,4 +638,41 @@ $('ex-prev').onclick=()=>{explorePage--;exploreRenderList()};$('ex-next').onclic
 $('ex-rows').onclick=e=>{const b=e.target.closest('[data-ex-site]');if(!b)return;const x=all[Number(b.dataset.exSite)];if(!x)return;exploreClose();['district','pbt','type','search'].forEach(id=>$(id).value='');refresh();focusSite(x.id)};
 
 document.querySelectorAll('.side-navigation a').forEach(a=>a.addEventListener('click',e=>{const dest=a.getAttribute('href');if(dest==='#taburan'||dest==='#senarai'){e.preventDefault();exploreOpen(dest==='#taburan'?'distribution':'list')}else exploreClose()}));
+
+/* Lightweight district/PBT boundaries shared across dashboard maps */
+let admDaerahData=null,admPbtData=null,admLoading=null;
+function loadAdministrativeData(){
+ if(!admLoading)admLoading=Promise.all([
+  fetch('./data/sempadan-daerah.geojson').then(r=>{if(!r.ok)throw Error('Sempadan Daerah: '+r.status);return r.json()}),
+  fetch('./data/sempadan-pbt.geojson').then(r=>{if(!r.ok)throw Error('Sempadan PBT: '+r.status);return r.json()})
+ ]).then(([d,p])=>{admDaerahData=d;admPbtData=p;return [d,p]}).catch(e=>{console.warn('Sempadan pentadbiran tidak dapat dimuatkan',e);return null});
+ return admLoading;
+}
+function attachAdminBoundaries(target){
+ if(!target||target._admAttached)return;
+ target._admAttached=true;
+ loadAdministrativeData().then(data=>{
+  if(!data)return;
+  const panes=[['admDaerahLine',385],['admPbtLine',386],['admDaerahText',440],['admPbtText',441]];
+  panes.forEach(([name,z])=>{if(!target.getPane(name))target.createPane(name);target.getPane(name).style.zIndex=z;target.getPane(name).style.pointerEvents='none'});
+  const createLine=(geo,pane,color,dash,weight,opacity)=>L.geoJSON(geo,{pane,interactive:false,style:{color,weight,opacity,dashArray:dash,lineCap:'round',lineJoin:'round',fill:false,fillOpacity:0}}).addTo(target);
+  const ds=createLine(admDaerahData,'admDaerahLine','#4B5563','9 4 1 5',1.25,.55);
+  const ps=createLine(admPbtData,'admPbtLine','#6B7280','8 4 1 3 1 6',1.0,.40);
+  const dl=L.layerGroup(),pl=L.layerGroup();
+  for(const [geo,layer,pane,cls] of [[admDaerahData,dl,'admDaerahText','adm-label-daerah'],[admPbtData,pl,'admPbtText','adm-label-pbt']]){
+    geo.features.forEach(feature=>{
+      const xy=feature.properties.center,name=feature.properties.name;
+      if(!xy||!name)return;
+      L.marker([xy[1],xy[0]],{pane,interactive:false,keyboard:false,icon:L.divIcon({className:'adm-label-icon '+cls,html:'<span>'+esc(name)+'</span>',iconSize:[1,1],iconAnchor:[0,0]})}).addTo(layer);
+    });
+  }
+  const updateLabels=()=>{
+   const z=target.getZoom();
+   if(z>=9&&!target.hasLayer(dl))dl.addTo(target);else if(z<9&&target.hasLayer(dl))target.removeLayer(dl);
+   if(z>=11&&!target.hasLayer(pl))pl.addTo(target);else if(z<11&&target.hasLayer(pl))target.removeLayer(pl);
+  };
+  target.on('zoomend',updateLabels);updateLabels();
+  target._admLayers={daerah:ds,pbt:ps,daerahLabels:dl,pbtLabels:pl};
+ });
+}
 </script></body></html>
