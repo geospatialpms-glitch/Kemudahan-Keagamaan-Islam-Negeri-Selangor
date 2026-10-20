@@ -331,6 +331,25 @@ body.analysis-mode:not(.coverage-mode) #home-view>.table-panel,
 body.analysis-mode:not(.coverage-mode) #home-view>footer{display:none!important}
 body.analysis-mode:not(.coverage-mode) #home-view{display:block!important}
 
+
+/* Coverage analysis workspace styled to match the approved two-tab mockup */
+.coverage-grid{display:grid;grid-template-columns:245px minmax(330px,1fr) 305px;gap:10px;align-items:start}
+.coverage-controls,.coverage-map-panel,.coverage-results{border:1px solid #ead7ba;border-radius:10px;background:#fffdf9;box-shadow:0 3px 12px #67452510;overflow:hidden}
+.coverage-controls{padding:14px}.coverage-controls h2{color:#c83c2f;font-size:15px;margin:0 0 8px}.coverage-controls p{font-size:11px;color:#6d7180}
+.coverage-controls>label{display:block;font-size:11px;font-weight:700;margin:12px 0}.coverage-controls select{display:block;width:100%;margin-top:5px;height:35px;border:1px solid #e1cdb0}
+.coverage-controls fieldset{border:0;padding:0;margin:16px 0}.coverage-controls legend{font-size:11px;font-weight:700;margin-bottom:6px}
+.radius-choices{display:flex;gap:5px}.radius-choices label{flex:1;border:1px solid #e7cba5;border-radius:6px;padding:8px 3px;text-align:center;font-size:11px;white-space:nowrap}.radius-choices input{width:auto;min-height:0;margin:0 3px 0 0}
+.coverage-controls>button{width:100%;margin:4px 0;height:37px}.coverage-controls #cov-run{background:linear-gradient(90deg,#ca3531,#f29624);color:#fff}.coverage-controls #cov-message{font-weight:600;color:#9b5231}
+.coverage-disclaimer{font-size:10px;line-height:1.5;color:#7d7280;margin-top:15px}
+.coverage-panel-title{font-weight:800;color:#c13c31;padding:12px;border-bottom:1px solid #f0e0c8}
+#coverage-map{height:510px;width:100%;background:#e4e6dd}.coverage-map-legend{font-size:11px;padding:9px 13px;background:#fff8ed}.cov-red{color:#d94249}.cov-orange{color:#e99a2f}.cov-ring{color:#d2aa2d}
+.coverage-results{padding:13px}.coverage-results h3{color:#bd4030;font-size:12px;margin:2px 0 12px}.coverage-result-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.coverage-result-cards>div{border:1px solid #eee0cb;border-radius:7px;padding:12px 8px;background:#fffaf1}
+.coverage-result-cards small{font-size:10px;display:block;color:#727487}.coverage-result-cards strong{font-size:19px;color:#b8323a;display:block;margin-top:6px}
+.coverage-selected{margin:12px 0;font-size:11px;line-height:1.5}.coverage-list-scroll{max-height:230px;overflow:auto}.coverage-list-scroll table{min-width:100%;font-size:10px}.coverage-list-scroll th,.coverage-list-scroll td{padding:7px 5px;white-space:normal}
+.view-tabs button svg,.side-navigation a svg{vertical-align:middle}.side-navigation a span{display:inline-grid;place-items:center}
+@media(max-width:1350px){.coverage-grid{grid-template-columns:220px minmax(260px,1fr)}.coverage-results{grid-column:1/-1}#coverage-map{height:420px}}
+@media(max-width:820px){.coverage-grid{grid-template-columns:1fr}.coverage-results{grid-column:auto}#coverage-map{height:370px}}
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
@@ -343,22 +362,30 @@ body.analysis-mode:not(.coverage-mode) #home-view{display:block!important}
 </header>
 <div class="layout"><aside class="islamic-sidebar navigation-sidebar">
 <nav class="side-navigation" aria-label="Navigasi dashboard">
-<a class="active" href="#home"><span>⌂</span>Utama</a>
-<a href="#taburan"><span>⌖</span>Taburan Kemudahan</a>
-<a href="#jenis"><span>◉</span>Kategori Kemudahan</a>
-<a href="#daerah"><span>▥</span>Analisis Daerah</a>
-<a href="#pbt-panel"><span>▤</span>Analisis PBT</a>
-<a href="#senarai"><span>☷</span>Senarai Kemudahan</a>
-<a href="#mengenai"><span>ⓘ</span>Mengenai</a>
+<a class="active" href="#home"><span><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10H3zM9 20v-7h6v7"/></svg></span>Utama</a>
+<a href="#taburan"><span><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2zM9 3v16m6-14v16"/></svg></span>Taburan Kemudahan</a>
+<a href="#jenis"><span><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 9 5-9 5-9-5zm-9 10 9 5 9-5M3 17l9 5 9-5"/></svg></span>Kategori Kemudahan</a>
+<a href="#daerah"><span><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9h4v11m4 0V4h4v16m4 0v-8h3v8"/></svg></span>Analisis Daerah</a>
+<a href="#pbt-panel"><span><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V7l8-4 8 4v14M8 9h2m4 0h2M8 13h2m4 0h2M8 21v-4h8v4"/></svg></span>Analisis PBT</a>
+<a href="#senarai"><span><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h1M3 12h1M3 18h1"/></svg></span>Senarai Kemudahan</a>
+<a href="#mengenai"><span><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/></svg></span>Mengenai</a>
 </nav>
 <div class="sidebar-motif" aria-hidden="true">۞</div>
 <div class="agency"><b>✧</b>PLANMalaysia Selangor</div>
 </aside>
-<main id="home"><div class="view-tabs" role="tablist" aria-label="Paparan Dashboard"><button type="button" role="tab" id="tab-overview" aria-selected="true" aria-controls="home-view" class="active"><span aria-hidden="true">▥</span> Overview</button><button type="button" role="tab" id="tab-coverage" aria-selected="false" aria-controls="coverage-view"><span aria-hidden="true">⌖</span> Coverage Analysis</button></div>
+<main id="home"><div class="view-tabs" role="tablist" aria-label="Paparan Dashboard"><button type="button" role="tab" id="tab-overview" aria-selected="true" aria-controls="home-view" class="active"><span aria-hidden="true">▥</span> Paparan Keseluruhan</button><button type="button" role="tab" id="tab-coverage" aria-selected="false" aria-controls="coverage-view"><span aria-hidden="true">⌖</span> Analisis Liputan</button></div>
 <section id="coverage-view" class="coverage-view" role="tabpanel" aria-labelledby="tab-coverage" hidden>
-<div class="coverage-intro"><div><div class="coverage-kicker">ANALISIS LIPUTAN SPATIAL</div><h2>Coverage Analysis Kemudahan Keagamaan (Islam)</h2><p>Ruang analisis liputan Masjid dan Surau mengikut lokasi, Daerah dan PBT. Mod pengiraan kawasan liputan belum diaktifkan.</p></div><span class="coverage-state">Dalam pembangunan</span></div>
-<div class="coverage-preview"><div class="coverage-preview-side"><h3>Panel Analisis Liputan</h3><p>Modul ini akan menyediakan pilihan kemudahan, radius liputan dan paparan keputusan selepas kaedah analisis ditetapkan.</p><div class="coverage-facts"><div><small>Jumlah Rekod GIS</small><strong id="coverage-total">—</strong></div><div><small>Kategori</small><strong>Masjid / Surau</strong></div></div><p class="coverage-disclaimer">Liputan sebenar memerlukan kaedah buffer jarak atau servis rangkaian jalan. Tiada zon liputan yang direka atau dianggap telah dikira.</p></div><div class="coverage-preview-map"><div><span aria-hidden="true">⌖</span><strong>Paparan Peta Coverage Analysis</strong><p>Peta dan zon liputan interaktif akan dipaparkan di sini apabila modul analisis dibangunkan.</p></div></div></div>
-</section><div id="home-view"><section id="analysis-workspace" class="analysis-workspace" hidden aria-label="Analisis mengikut kawasan">
+<div class="coverage-grid">
+<aside class="coverage-controls"><h2>⌖ Analisis Liputan</h2><p>Analisis radius jarak lurus daripada kemudahan terpilih.</p>
+<label>Daerah<select id="cov-district"><option value="">Semua Daerah</option></select></label>
+<label>PBT<select id="cov-pbt"><option value="">Semua PBT</option></select></label>
+<label>Kategori<select id="cov-category"><option value="">Semua Kategori</option><option>Masjid</option><option>Surau</option></select></label>
+<label>Kemudahan Dipilih<select id="cov-site"><option value="">Pilih kemudahan</option></select></label>
+<fieldset><legend>Jarak Liputan (Radius)</legend><div class="radius-choices"><label><input type="radio" name="cov-radius" value="1">1 km</label><label><input type="radio" name="cov-radius" value="3" checked>3 km</label><label><input type="radio" name="cov-radius" value="5">5 km</label></div></fieldset>
+<button type="button" id="cov-run" class="primary">▶ Jalankan Analisis Liputan</button><button type="button" id="cov-clear">↻ Set Semula</button><p id="cov-message" role="status">Pilih kemudahan, kemudian jalankan analisis.</p>
+<p class="coverage-disclaimer">Radius ialah jarak lurus (buffer geometri), bukan tempoh pemanduan, berjalan kaki atau ukuran kecukupan perkhidmatan.</p></aside>
+<div class="coverage-map-panel"><div class="coverage-panel-title">⌖ Peta Analisis Liputan</div><div id="coverage-map"></div><div class="coverage-map-legend"><span class="cov-red">●</span> Masjid　<span class="cov-orange">●</span> Surau　<span class="cov-ring">◯</span> Radius liputan</div></div>
+<div class="coverage-results"><h3>Ringkasan Analisis Liputan</h3><div class="coverage-result-cards"><div><small>Jarak Radius</small><strong id="cov-distance">—</strong></div><div><small>Keluasan Lingkaran Teori</small><strong id="cov-area">—</strong></div><div><small>Masjid Dalam Radius</small><strong id="cov-masjid">—</strong></div><div><small>Surau Dalam Radius</small><strong id="cov-surau">—</strong></div></div><div id="cov-selected" class="coverage-selected"></div><h3>Senarai Kemudahan Dalam Radius</h3><div class="coverage-list-scroll"><table><thead><tr><th>Nama Kemudahan</th><th>Kategori</th><th>Jarak (km)</th></tr></thead><tbody id="cov-rows"><tr><td colspan="3">Belum dianalisis</td></tr></tbody></table></div><p class="coverage-disclaimer">Keluasan lingkaran ialah πr² dan tidak ditolak kawasan luar negeri atau laut. Bilangan dikira berdasarkan titik wakil rekod GIS.</p></div></div></section><div id="home-view"><section id="analysis-workspace" class="analysis-workspace" hidden aria-label="Analisis mengikut kawasan">
 <div class="analysis-heading"><div><span class="analysis-eyebrow">ANALISIS SPATIAL KEMUDAHAN KEAGAMAAN (ISLAM)</span><h2 id="analysis-heading">Analisis Daerah</h2><p>Perbandingan kemudahan berdasarkan rekod GIS sebenar. Pilih kawasan untuk melihat butiran.</p></div><button type="button" id="analysis-home">⌂ Kembali ke Utama</button></div>
 <div class="analysis-toolbar"><label id="analysis-select-label" for="analysis-select">Pilih Daerah</label><select id="analysis-select"></select><button type="button" id="analysis-reset">Semua Kawasan</button></div>
 <div class="analysis-kpis"><div><small>Jumlah Kemudahan</small><strong id="ak-total">—</strong></div><div><small>Masjid</small><strong id="ak-masjid">—</strong></div><div><small>Surau</small><strong id="ak-surau">—</strong></div><div><small>Keluasan (ha)</small><strong id="ak-area">—</strong></div></div>
@@ -457,4 +484,33 @@ $('tab-overview').addEventListener('click',()=>setPrimaryView('overview'));
 $('tab-coverage').addEventListener('click',()=>setPrimaryView('coverage'));
 document.querySelectorAll('.side-navigation a').forEach(a=>a.addEventListener('click',()=>{if(document.body.classList.contains('coverage-mode'))setPrimaryView('overview')},true));
 
+
+/* True straight-line radial analysis, derived from source representative coordinates. */
+let coverageMap=null,coverageLayers=null,coverageCircle=null,coverageChosen=null;
+const kmBetween=(a,b)=>{const rad=Math.PI/180,p1=a.lat*rad,p2=b.lat*rad,dp=(b.lat-a.lat)*rad,dl=(b.lon-a.lon)*rad;return 6371*2*Math.asin(Math.min(1,Math.sqrt(Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2)))};
+function coverageInit(){if(coverageMap)return;coverageMap=L.map('coverage-map',{preferCanvas:true}).setView([3.25,101.5],10);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(coverageMap);coverageLayers=L.layerGroup().addTo(coverageMap)}
+function coverageFill(id,values,placeholder){const el=$(id),previous=el.value;el.innerHTML='<option value="">'+placeholder+'</option>'+values.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');if(values.includes(previous))el.value=previous}
+function coverageOptions(){const district=$('cov-district').value,pbt=$('cov-pbt').value,category=$('cov-category').value;
+ const subset=all.filter(x=>(!district||x.d===district)&&(!pbt||x.p===pbt));
+ coverageFill('cov-pbt',[...new Set(all.filter(x=>!district||x.d===district).map(x=>x.p))].sort(),'Semua PBT');
+ const usable=subset.filter(x=>!category||x.k===category).sort((a,b)=>a.n.localeCompare(b.n,'ms'));
+ const el=$('cov-site'),prior=el.value;el.innerHTML='<option value="">Pilih kemudahan</option>'+usable.map(x=>'<option value="'+x.id+'">'+esc(x.n)+' ('+esc(shortPBT(x.p))+')</option>').join('');if(usable.some(x=>String(x.id)===prior))el.value=prior;
+}
+function coverageReset(){coverageChosen=null;$('cov-district').value='';$('cov-pbt').value='';$('cov-category').value='';document.querySelector('input[name="cov-radius"][value="3"]').checked=true;coverageOptions();['cov-distance','cov-area','cov-masjid','cov-surau'].forEach(id=>$(id).textContent='—');$('cov-rows').innerHTML='<tr><td colspan="3">Belum dianalisis</td></tr>';$('cov-selected').textContent='';$('cov-message').textContent='Pilih kemudahan, kemudian jalankan analisis.';if(coverageMap){coverageLayers.clearLayers();coverageMap.setView([3.25,101.5],10)}}
+function coverageRun(){const id=$('cov-site').value,site=all.find(x=>String(x.id)===id);if(!site){$('cov-message').textContent='Sila pilih satu kemudahan terlebih dahulu.';return}
+ coverageInit();const radius=Number(document.querySelector('input[name="cov-radius"]:checked').value),inside=all.map(x=>({...x,km:kmBetween(site,x)})).filter(x=>x.km<=radius).sort((a,b)=>a.km-b.km);
+ coverageLayers.clearLayers();L.circle([site.lat,site.lon],{radius:radius*1000,color:'#d88b25',weight:2,fillColor:'#f6b64b',fillOpacity:.18}).addTo(coverageLayers);
+ inside.forEach(x=>L.circleMarker([x.lat,x.lon],{radius:4,color:'#fff',weight:1,fillColor:x.k==='Masjid'?'#d94249':'#ed9338',fillOpacity:.95}).bindPopup(esc(x.n)+' — '+esc(x.k)).addTo(coverageLayers));
+ L.marker([site.lat,site.lon]).bindPopup('<b>'+esc(site.n)+'</b><br>Lokasi pusat liputan').addTo(coverageLayers);
+ coverageMap.fitBounds(L.circle([site.lat,site.lon],{radius:radius*1000}).getBounds(),{padding:[25,25]});
+ $('cov-distance').textContent=radius+' km';$('cov-area').textContent=(Math.PI*radius*radius).toFixed(2)+' km²';$('cov-masjid').textContent=fmt(inside.filter(x=>x.k==='Masjid').length);$('cov-surau').textContent=fmt(inside.filter(x=>x.k==='Surau').length);
+ $('cov-selected').textContent='Pusat: '+site.n+' · '+site.d+' · '+shortPBT(site.p);
+ $('cov-rows').innerHTML=inside.slice(0,120).map(x=>'<tr><td>'+esc(x.n)+'</td><td>'+esc(x.k)+'</td><td>'+x.km.toFixed(2)+'</td></tr>').join('')||'<tr><td colspan="3">Tiada kemudahan dalam radius.</td></tr>';
+ $('cov-message').textContent=fmt(inside.length)+' kemudahan dalam radius '+radius+' km'+(inside.length>120?' (120 rekod pertama dipaparkan)':'');
+}
+$('cov-district').onchange=()=>{coverageFill('cov-pbt',[...new Set(all.filter(x=>!$('cov-district').value||x.d===$('cov-district').value).map(x=>x.p))].sort(),'Semua PBT');coverageOptions()};
+$('cov-pbt').onchange=coverageOptions;$('cov-category').onchange=coverageOptions;
+$('cov-run').onclick=coverageRun;$('cov-clear').onclick=coverageReset;
+const originalPrimaryView=setPrimaryView;
+setPrimaryView=function(view){originalPrimaryView(view);if(view==='coverage'){coverageInit();coverageFill('cov-district',[...new Set(all.map(x=>x.d))].sort(),'Semua Daerah');coverageOptions();setTimeout(()=>coverageMap.invalidateSize(),100)}};
 </script></body></html>
