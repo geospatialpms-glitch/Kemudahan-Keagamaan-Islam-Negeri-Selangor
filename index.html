@@ -505,6 +505,22 @@ td,.ex-table-scroll tbody td{color:#344054}
 .explore-head p,.analysis-heading p,.insight-footnote{color:var(--suo-muted)!important}
 .category-masjid{color:var(--suo-ink)!important}
 button.primary{color:#fff!important}
+
+/* Unified text theme for Taburan, Analisis Daerah, Analisis PBT and Senarai */
+:root{--analysis-title:#18233f;--analysis-body:#475467;--analysis-caption:#667085;--analysis-accent:#d65d35}
+.explore-head,.analysis-heading{background:linear-gradient(105deg,#fffaf0 0%,#fffdf9 75%,#fff 100%);border:1px solid #ead6b7;border-radius:10px;padding:17px 19px}
+.explore-head small,.analysis-eyebrow{display:block;color:var(--analysis-title)!important;font-size:10px!important;font-weight:800!important;letter-spacing:.85px!important;line-height:1.4!important}
+.explore-head h2,.analysis-heading h2{color:var(--analysis-title)!important;font-size:21px!important;font-weight:800!important;letter-spacing:-.25px;line-height:1.2;margin:5px 0!important}
+.explore-head p,.analysis-heading p{color:var(--analysis-body)!important;font-size:11.5px!important;line-height:1.55}
+.explore-controls label,.analysis-toolbar label{color:var(--analysis-title)!important;font-size:11px!important;font-weight:700!important}
+.explore-controls select,.explore-controls input,.analysis-toolbar select{color:var(--analysis-title)!important;font-size:11px!important}
+.explore-kpis>div,.analysis-kpis>div{border:1px solid #ebd5b5;background:linear-gradient(105deg,#fffefa,#fff8ed);border-radius:9px;min-height:73px}
+.explore-kpis small,.analysis-kpis small{color:var(--analysis-body)!important;font-size:10.5px!important;font-weight:600!important;line-height:1.3}
+.explore-kpis strong,.analysis-kpis strong{color:var(--analysis-title)!important;font-size:24px!important;font-weight:800!important;line-height:1.1;letter-spacing:-.35px;margin-top:5px!important;font-variant-numeric:tabular-nums}
+.explore-panel h3,.analysis-card h3,.analysis-card h4,.explore-list-header h3{color:var(--analysis-title)!important;font-size:13px;font-weight:750}
+.explore-controls button,.analysis-toolbar button{color:#994b2c!important;border-color:#dfb985;font-weight:700}
+.explore-controls button:hover,.analysis-toolbar button:hover{background:#fff2de}
+@media(max-width:700px){.explore-head,.analysis-heading{padding:13px}.explore-head h2,.analysis-heading h2{font-size:18px!important}.explore-kpis strong,.analysis-kpis strong{font-size:20px!important}}
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
