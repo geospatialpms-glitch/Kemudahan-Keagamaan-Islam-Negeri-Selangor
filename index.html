@@ -322,6 +322,15 @@ body.analysis-mode.coverage-mode #coverage-view{display:block}
 body.analysis-mode:not(.coverage-mode) .view-tabs{display:none}
 @media(max-width:760px){.coverage-preview{grid-template-columns:1fr}.coverage-preview-map{min-height:280px}.coverage-intro{flex-direction:column;align-items:flex-start}.view-tabs button{height:40px;font-size:11px}}
 
+
+/* Maintain dedicated district/PBT module visibility after Overview wrapper */
+body.analysis-mode:not(.coverage-mode) #home-view>.stats,
+body.analysis-mode:not(.coverage-mode) #home-view>.horizontal-filters,
+body.analysis-mode:not(.coverage-mode) #home-view>.content,
+body.analysis-mode:not(.coverage-mode) #home-view>.table-panel,
+body.analysis-mode:not(.coverage-mode) #home-view>footer{display:none!important}
+body.analysis-mode:not(.coverage-mode) #home-view{display:block!important}
+
 </style></head><body>
 <header class="suo-header" role="banner">
   <img class="suo-brand-logo" src="./suo-logo.jpg" alt="Logo Selangor Urban Observatory (SUO)" width="78" height="80" decoding="async">
